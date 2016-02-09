@@ -20,7 +20,7 @@ public final class Post{
         //Reference to the store it belongs
         this.parentStore = _parentStore;
         System.out.println("Post Initialized!");
-        runPost();
+        
     }
     
     public void runPost(){

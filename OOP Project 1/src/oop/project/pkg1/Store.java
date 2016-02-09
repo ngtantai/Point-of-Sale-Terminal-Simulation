@@ -26,7 +26,7 @@ public class Store {
         
         
         System.out.println("Welcome");
-        runStore();
+        
         
         
         
@@ -55,6 +55,7 @@ public class Store {
             }else if(option == 2){
                 //Initialize the post
                 currentPost = new Post(this);
+                currentPost.runPost();
                 //won't need the same object again, okay to get rid of it
                 currentPost = null;
                 

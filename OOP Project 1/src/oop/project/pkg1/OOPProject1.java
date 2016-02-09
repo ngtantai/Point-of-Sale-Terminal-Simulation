@@ -36,6 +36,7 @@ public class OOPProject1 {
             } else if (Files.isDirectory(Paths.get("./stores/" + option))) {
 
                 Store currentStore = new Store(option);
+                currentStore.runStore();
 
             } else {
                
@@ -47,6 +48,7 @@ public class OOPProject1 {
                        
                         Store.createStore(option);
                         Store currentStore = new Store(option);
+                        currentStore.runStore();
                         
                         break;
                     } else if (option.equals("no") || option.equals("n")) {

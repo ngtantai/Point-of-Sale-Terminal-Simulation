@@ -28,12 +28,15 @@ public final class Post{
         Scanner sc = new Scanner(System.in);
         int optionNumber;
         while(true){
-            System.out.println("***POST TERMINAL***");
+            System.out.println("\n\n\n***POST TERMINAL***");
             System.out.println("Enter name to begin transaction, or \"exit\"");
+            System.out.println("type CATALOG to view items");
             option = sc.nextLine();
             
             if (option.equals("exit")) {
                 break;
+            } else if (option.equals("CATALOG")){
+                this.parentStore.viewCatalog();
             }
 
         }

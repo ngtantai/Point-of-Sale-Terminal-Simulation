@@ -1,0 +1,3 @@
+0001     first product            0090.33 
+0002     second product           0050.30 
+0003     third product            1110.30

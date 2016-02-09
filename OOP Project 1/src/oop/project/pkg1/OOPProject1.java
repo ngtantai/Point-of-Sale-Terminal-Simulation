@@ -29,7 +29,7 @@ public class OOPProject1 {
         Scanner sc = new Scanner(System.in);
 
         while (true) {
-            System.out.println("***SYSTEM CONTROL***");
+            System.out.println("\n\n\n***SYSTEM CONTROL***");
             System.out.println("Enter Store name to load/create store, or \"exit\"");
             option = sc.nextLine();
             if (option.equals("exit")) {

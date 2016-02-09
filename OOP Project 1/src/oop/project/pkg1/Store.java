@@ -26,6 +26,8 @@ public class Store {
         
         
         System.out.println("Welcome");
+        runStore();
+        
         
         
         
@@ -35,10 +37,16 @@ public class Store {
     
     
     
-    public void run(){
+    public void runStore(){
         Scanner sc = new Scanner(System.in);
         while(true){
-            System.out.println("Options : (Enter a number)\n1:Exit \n2:Start Post");
+            System.out.println("***STORE MENU***");
+            System.out.println("Options : (Enter a number)");
+            System.out.println("1: Exit");
+            System.out.println("2: Start Post");
+            System.out.println("3: Product Manager");
+            System.out.println("4: Transaction Manager");
+            
             option = sc.nextInt();
             if(option == 1){
                 //Exit the system
@@ -46,7 +54,9 @@ public class Store {
                 break;
             }else if(option == 2){
                 //Initialize the post
-                this.initializePost();
+                currentPost = new Post(this);
+                //won't need the same object again, okay to get rid of it
+                currentPost = null;
                 
             }else{
                 System.out.println("Invalid Option");
@@ -58,14 +68,7 @@ public class Store {
         System.out.println("test");
     }
     
-    private void initializePost(){
-        //Initialize a new post
-        currentPost = new Post(this);
-        
-        //When done, get rid of it
-        currentPost = null;
-    }
-    
+
     public static void createStore(String option){
         //Create directory and files
     }

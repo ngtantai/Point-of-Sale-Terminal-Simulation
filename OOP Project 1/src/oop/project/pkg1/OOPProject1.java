@@ -16,8 +16,10 @@ import java.nio.file.Paths;
 public class OOPProject1 {
 
     /**
+     * Main driver program
      * @param args the command line arguments
      */
+    
     public static void main(String[] args) {
         String option;
 
@@ -26,6 +28,7 @@ public class OOPProject1 {
         Scanner sc = new Scanner(System.in);
 
         while (true) {
+            System.out.println("***SYSTEM CONTROL***");
             System.out.println("Enter Store name to load/create store, or \"exit\"");
             option = sc.nextLine();
             if (option.equals("exit")) {
@@ -37,6 +40,7 @@ public class OOPProject1 {
             } else {
                
                while (true) {
+                    System.out.println("***SYSTEM CONTROL***");
                     System.out.println("Store Data not found. Would you like to create a new store? (yes/no)");
                     option = sc.nextLine();
                     if (option.equals("yes") || option.equals("y")) {

@@ -1,7 +1,25 @@
 package Catalog;
 /**
  * @author: Jose Ortiz Costa
- * Desfription: This class contains methods to work with the catalog of a store
+ * Date: 02/09/2016
+ * Modified:  02/09/2016
+ * Description: This class contains methods to work with the catalog of products of a store
+ * Usage: 
+ *      1. if you are working in other package, import the Catalog package.
+ *           import Catalog.*;
+ *      2. Create an object of this class
+ *           Stock catalog = new Stock();
+ *      3. Example: Get a product from the catalog  given its upc as argument
+ *           Product product = catalog.getProduct("0001");
+ *      4. Example: Check is a product exist in the catalog
+ *           boolean isInCatalog = catalog.isProductInStock("0001");
+ *      5. Example: Get the list of all the products
+ *           ArrayList <Product> products = catalog.getProductsFromStock();
+ *      6. Example: View all products in the catalog
+ *           catalog.viewCatalog();
+ * 
+ * 
+ * @see: Product.java
  */
 import java.util.ArrayList;
 import java.io.*;
@@ -16,7 +34,7 @@ public class Stock implements IStock {
      */
     public Stock() {
         this.products = new ArrayList<>();
-        loadCatalog();
+        
     }
     /**
      * Contructor
@@ -27,7 +45,7 @@ public class Stock implements IStock {
         this.store = storeName;
         this.catalog = new File(catalogFileName);
         this.products = new ArrayList<>();
-        loadCatalog(); // loads catalog and its products in memory
+        
     }
     /**
      * Constructor
@@ -41,7 +59,7 @@ public class Stock implements IStock {
     /**
      * Loads catalog of products in memory
      */
-    private void loadCatalog() {
+    public void loadCatalog() {
         try {
             FileInputStream fis = new FileInputStream(catalog);
             //Construct BufferedReader from InputStreamReader
@@ -90,9 +108,11 @@ public class Stock implements IStock {
      * @return true if the product was succesfully added
      *         otherwise, returns false.
      */
-    public boolean addProductToStock(Product product) {
+    public boolean addProduct(Product product) {
         // Add a product to the catalog.
-        // Needs to be implemented
+        /**
+         * needs to be implemented
+         */
         return false;
     }
     
@@ -127,10 +147,23 @@ public class Stock implements IStock {
         }
         return product;
     }
+    
+    /**
+     * Get a product by a given id or index ( position on the list )
+     * @param index position of product on the catalog
+     * @return a Product Object
+     * Note: Index starts with 0.
+     */
+    public Product getProduct(int index)
+    {
+        return products.get(index);
+    }
+    
+    
     /**
      * Prints the whole catalog of products
      */
-    public void printCatalog() {
+    public void viewCatalog() {
         try {
             FileInputStream fis = new FileInputStream(catalog);
             //Construct BufferedReader from InputStreamReader

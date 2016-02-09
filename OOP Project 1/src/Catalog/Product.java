@@ -2,9 +2,13 @@ package Catalog;
 
 /**
  * 
- * @author Jose Ortiz Costa
+ * @author      Jose Ortiz Costa
  * Description: This class represents a product from a catalog
- *              with its properties.
+ *              with its properties ( UPC, description and price )
+ * Date:        02/09/2016
+ * Modified:    02/09/2016
+ * USAGE:       
+ * 
  */
 public class Product {
 
@@ -55,9 +59,9 @@ public class Product {
     /**
       Print description of product
     */
-    public String toString ()
+    public String viewProductInfo ()
     {
-        return "UPC: " + this.upc + "\nDescription: " + this.desc + "\nPrice: " + this.price;
+        return this.upc + "          ";
     }
 
 }

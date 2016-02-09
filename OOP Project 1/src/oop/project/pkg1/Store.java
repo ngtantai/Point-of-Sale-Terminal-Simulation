@@ -4,7 +4,11 @@
  * and open the template in the editor.
  */
 package oop.project.pkg1;
+import java.io.File;
 import java.util.Scanner;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 /**
  *
  * @author mac
@@ -16,11 +20,23 @@ public class Store {
     
     public Store(String name){
         //Initialize stuff here needs to read in data and what not
-        
         this.storeName = name;
-        System.out.println("Welcome");
-        Scanner sc = new Scanner(System.in);
+        //First check and see if this store has already been created
         
+        
+        
+        System.out.println("Welcome");
+        
+        
+        
+        
+    }
+    
+    
+    
+    
+    public void run(){
+        Scanner sc = new Scanner(System.in);
         while(true){
             System.out.println("Options : (Enter a number)\n1:Exit \n2:Start Post");
             option = sc.nextInt();
@@ -36,7 +52,6 @@ public class Store {
                 System.out.println("Invalid Option");
             }
         }
-        
     }
     
     public void test(){
@@ -50,5 +65,11 @@ public class Store {
         //When done, get rid of it
         currentPost = null;
     }
+    
+    public static void createStore(String option){
+        //Create directory and files
+    }
+    
+   
     
 }

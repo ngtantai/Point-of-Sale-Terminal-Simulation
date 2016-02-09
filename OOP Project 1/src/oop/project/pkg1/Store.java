@@ -9,6 +9,7 @@ import java.util.Scanner;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import oop.project.pkg1.transaction.TransactionManager;
 /**
  *
  * @author mac
@@ -16,12 +17,18 @@ import java.nio.file.Paths;
 public class Store {
     public String storeName;
     private int option;
+    private String path;
     public Post currentPost;
+    private TransactionManager transactionManager;
     
-    public Store(String name){
+    public Store(String name , String path){
         //Initialize stuff here needs to read in data and what not
         this.storeName = name;
+        this.path = path;
+        transactionManager = new TransactionManager(this);
+        
         //First check and see if this store has already been created
+        
         
         
         
@@ -72,6 +79,39 @@ public class Store {
 
     public static void createStore(String option){
         //Create directory and files
+    }
+    
+    public String getPath(){
+        
+        return this.path;
+    }
+    
+    public void catalogManager(){
+        Scanner sc = new Scanner(System.in);
+        while(true){
+            System.out.println("***CATALOG MANAGER***");
+            System.out.println("Options : (Enter a number)");
+            System.out.println("1: Exit");
+            System.out.println("2: View Catalog");
+            System.out.println("3: Add Item");
+            
+            option = sc.nextInt();
+            
+            if(option == 1){
+                //Exit the system
+                System.out.println("--Returning To Store Main Menu--");
+                break;
+            }else if(option == 2){
+                
+                //Output the catalog
+            }else if(option == 3){
+                
+                //Add Item Wizard
+                
+            }else{
+                System.out.println("Invalid Option");
+            }
+        }
     }
     
    

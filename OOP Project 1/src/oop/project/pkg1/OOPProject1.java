@@ -22,6 +22,7 @@ public class OOPProject1 {
     
     public static void main(String[] args) {
         String option;
+        String path = "./stores/";
 
         // TODO code application logic here
         System.out.println("Initializing Store System");
@@ -35,7 +36,7 @@ public class OOPProject1 {
                 break;
             } else if (Files.isDirectory(Paths.get("./stores/" + option))) {
 
-                Store currentStore = new Store(option);
+                Store currentStore = new Store(option , path);
                 currentStore.runStore();
 
             } else {
@@ -47,7 +48,7 @@ public class OOPProject1 {
                     if (option.equals("yes") || option.equals("y")) {
                        
                         Store.createStore(option);
-                        Store currentStore = new Store(option);
+                        Store currentStore = new Store(option , path);
                         currentStore.runStore();
                         
                         break;

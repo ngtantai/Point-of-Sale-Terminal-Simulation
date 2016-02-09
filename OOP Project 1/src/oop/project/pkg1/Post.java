@@ -21,6 +21,7 @@ public final class Post{
         this.parentStore = _parentStore;
         System.out.println("Post Initialized!");
         
+ 
     }
     
     public void runPost(){
@@ -37,5 +38,7 @@ public final class Post{
 
         }
     }
+    
+ 
     
 }

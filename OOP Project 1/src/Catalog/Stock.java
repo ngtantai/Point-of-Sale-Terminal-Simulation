@@ -36,7 +36,7 @@ public class Stock implements IStock {
      */
     public Stock() {
         this.products = new ArrayList<>();
-        initProductBuilder(); // init product builder
+        
     }
     /**
      * Contructor
@@ -120,21 +120,26 @@ public class Stock implements IStock {
      * @return true if the product was succesfully added
      *         otherwise, returns false.
      */
-    public void addProduct(Product product) {
+    public boolean addProduct(Product product) {
         // Add a product to the catalog.
         try
         {
-            FileWriter fw = new FileWriter(this.catalog, true);
-            stringBuilderProduct(product);
-            fw.write("\n" + productBuilder.toString());
-            fw.close();
+            if (!this.isProductInStock(product.getUPC()))
+            {
+               FileWriter fw = new FileWriter(this.catalog, true);
+               initProductBuilder(); // init product builder
+               stringBuilderProduct(product);
+               fw.write("\n" + productBuilder.toString());
+               fw.close();
+               return true;
+            }
         }
         catch (IOException err)
         {
             System.out.println("Error: " + err.getMessage());
         }
         
-        
+        return false;
     }
     
     /**
@@ -161,7 +166,7 @@ public class Stock implements IStock {
         stringBuilderAttribute(upc, Product.UPC_STARS, Product.UPC_ENDS);
         stringBuilderAttribute(description, Product.DESC_STARS, Product.DESC_ENDS);
         stringBuilderAttribute(price, Product.PRICE_STARS, Product.PRICE_ENDS);
-        productBuilder = null;
+        
     }
     
     /**

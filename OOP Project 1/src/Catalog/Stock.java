@@ -24,6 +24,7 @@ package Catalog;
  */
 import java.util.ArrayList;
 import java.io.*;
+import java.util.Collections;
 
 public class Stock implements IStock {
 
@@ -127,9 +128,7 @@ public class Stock implements IStock {
             if (!this.isProductInStock(product.getUPC()))
             {
                FileWriter fw = new FileWriter(this.catalog, true);
-               initProductBuilder(); // init product builder
-               stringBuilderProduct(product);
-               fw.write("\n" + productBuilder.toString());
+               fw.write("\n" + product.viewProductToString(false));
                fw.close();
                return true;
             }
@@ -142,33 +141,7 @@ public class Stock implements IStock {
         return false;
     }
     
-    /**
-     * Prepare a product attribute to be formatted for adding to txt file
-     * @param productAttribute 
-     * @param startIndex
-     * @param endIndex 
-     */
-    private void stringBuilderAttribute (String productAttribute, int startIndex, int endIndex)
-    {
-        
-        this.productBuilder.replace(startIndex, endIndex, productAttribute);
-    }
-    
-    /**
-     * Format a product, so it can be added to the txt file.
-     * @param product Product Object 
-     */
-    private void stringBuilderProduct (Product product)
-    {
-        String upc = product.getUPC();
-        String description = product.getDescription();
-        String price = String.valueOf(product.getPrice());
-        stringBuilderAttribute(upc, Product.UPC_STARS, Product.UPC_ENDS);
-        stringBuilderAttribute(description, Product.DESC_STARS, Product.DESC_ENDS);
-        stringBuilderAttribute(price, Product.PRICE_STARS, Product.PRICE_ENDS);
-        
-    }
-    
+   
     /**
      * Checks if a given product by upc is in the catalog
      * @param upc product upc
@@ -214,23 +187,16 @@ public class Stock implements IStock {
     
     
     /**
-     * Prints the whole catalog of products sorted by product name
+     * Prints the whole catalog of products sorted by product description in
+     * ascending order.
      */
     public void viewCatalog() {
-        try {
-            System.out.println("\n\n\n ***STORE CATALOG***");
-            FileInputStream fis = new FileInputStream(catalog);
-            //Construct BufferedReader from InputStreamReader
-            BufferedReader br = new BufferedReader(new InputStreamReader(fis));
-            String product = null;
-            while ((product = br.readLine()) != null) {
-                System.out.println(product);
-            }
-            
-            br.close();
-        } catch (IOException err) {
-            System.out.println("Error: " + err.getMessage());
-        }
+        
+        Collections.sort(products);
+        System.out.println("\n\n\n ***STORE CATALOG***");
+        for (Product prod : products)
+            System.out.println(prod.viewProductToString(true));
+               
     }
 
 }

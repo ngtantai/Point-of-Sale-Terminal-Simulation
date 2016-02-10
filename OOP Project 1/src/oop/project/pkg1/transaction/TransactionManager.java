@@ -11,6 +11,7 @@ import oop.project.pkg1.Store;
  *
  * @author mac
  */
+//trial
 public class TransactionManager {
     private Store parentStore;
     private String path;

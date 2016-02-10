@@ -1,4 +1,5 @@
 package Catalog;
+
 /**
  * @author: Jose Ortiz Costa
  * Date: 02/09/2016
@@ -29,12 +30,13 @@ public class Stock implements IStock {
     private ArrayList<Product> products; // list of products
     private File catalog = new File("products.txt"); // catalog file
     private String store = null; // store
+    private StringBuilder productBuilder; // podruct builder to format for txt file
     /**
      * Constructor: no arguments
      */
     public Stock() {
         this.products = new ArrayList<>();
-        
+        initProductBuilder(); // init product builder
     }
     /**
      * Contructor
@@ -55,6 +57,16 @@ public class Stock implements IStock {
 
         this.products = products;
 
+    }
+    /**
+     * Initialize a StringBuilder of size 45 to allocate products attributes
+     */
+    private void initProductBuilder ()
+    {
+        this.productBuilder = new StringBuilder ();
+        int i = 0;
+        for (i = 0; i<45; i++)
+            productBuilder.append(" ");
     }
     /**
      * Loads catalog of products in memory
@@ -108,12 +120,48 @@ public class Stock implements IStock {
      * @return true if the product was succesfully added
      *         otherwise, returns false.
      */
-    public boolean addProduct(Product product) {
+    public void addProduct(Product product) {
         // Add a product to the catalog.
-        /**
-         * needs to be implemented
-         */
-        return false;
+        try
+        {
+            FileWriter fw = new FileWriter(this.catalog, true);
+            stringBuilderProduct(product);
+            fw.write("\n" + productBuilder.toString());
+            fw.close();
+        }
+        catch (IOException err)
+        {
+            System.out.println("Error: " + err.getMessage());
+        }
+        
+        
+    }
+    
+    /**
+     * Prepare a product attribute to be formatted for adding to txt file
+     * @param productAttribute 
+     * @param startIndex
+     * @param endIndex 
+     */
+    private void stringBuilderAttribute (String productAttribute, int startIndex, int endIndex)
+    {
+        
+        this.productBuilder.replace(startIndex, endIndex, productAttribute);
+    }
+    
+    /**
+     * Format a product, so it can be added to the txt file.
+     * @param product Product Object 
+     */
+    private void stringBuilderProduct (Product product)
+    {
+        String upc = product.getUPC();
+        String description = product.getDescription();
+        String price = String.valueOf(product.getPrice());
+        stringBuilderAttribute(upc, Product.UPC_STARS, Product.UPC_ENDS);
+        stringBuilderAttribute(description, Product.DESC_STARS, Product.DESC_ENDS);
+        stringBuilderAttribute(price, Product.PRICE_STARS, Product.PRICE_ENDS);
+        productBuilder = null;
     }
     
     /**
@@ -161,7 +209,7 @@ public class Stock implements IStock {
     
     
     /**
-     * Prints the whole catalog of products
+     * Prints the whole catalog of products sorted by product name
      */
     public void viewCatalog() {
         try {

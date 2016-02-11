@@ -129,7 +129,8 @@ public class Stock implements IStock {
             if (!this.isProductInStock(product.getUPC()))
             {
                FileWriter fw = new FileWriter(this.catalog, true);
-               fw.write("\n" + product.viewProductToString(false));
+               fw.write("\n" + product.productWritterToString());
+               fw.flush();
                fw.close();
                return true;
             }
@@ -196,7 +197,7 @@ public class Stock implements IStock {
         Collections.sort(products);
         System.out.println("\n\n\n ***STORE CATALOG***");
         for (Product prod : products)
-            System.out.println(prod.viewProductToString(true));
+            System.out.println(prod.productReaderToString());
                
     }
 

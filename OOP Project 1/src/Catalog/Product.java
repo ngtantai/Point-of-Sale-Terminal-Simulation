@@ -149,9 +149,15 @@ public class Product implements Comparable<Product> {
      *                   in the following order: UPC, Description, price.
      * @return a string representing the product formatted.
      */
-    public String viewProductToString(boolean outputMode) {
+    public String productReaderToString() {
         this.initProductBuilder();
-        this.stringBuilderProduct(outputMode);
+        this.stringBuilderProduct(true);
+        return productBuilder.toString();
+    }
+    
+    public String productWritterToString() {
+        this.initProductBuilder();
+        this.stringBuilderProduct(false);
         return productBuilder.toString();
     }
 

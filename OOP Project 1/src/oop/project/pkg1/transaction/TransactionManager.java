@@ -9,26 +9,26 @@ import Post.*;
 import java.io.BufferedReader;
 import java.util.ArrayList;
 
-
 /**
  *
  * @author mac
  */
-
-
 public class TransactionManager {
+
     private static ArrayList<Customer> customerList;
-    private Post currentPost;
+    private ArrayList<Transaction> transactions;
     
-    public TransactionManager (Post _post){
+    private Post currentPost;
+
+    public TransactionManager(Post _post) {
         this.currentPost = _post;
     }
-    
-    public static ArrayList<Customer> getTransactions() {
-		if (customerList == null) {
-			TransactionReader.viewTransactions();
-		}
 
-		return customerList;
-	}  
+    public static ArrayList<Customer> getTransactions() {
+        if (customerList == null) {
+            TransactionReader.viewTransactions();
+        }
+
+        return customerList;
+    }
 }

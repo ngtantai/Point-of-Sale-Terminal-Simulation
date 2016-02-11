@@ -16,7 +16,6 @@ import oop.project.pkg1.transaction.*;
  */
 public final class Post{
     private Store parentStore;
-    private String option;
     private TransactionManager transactionManager;
     
 

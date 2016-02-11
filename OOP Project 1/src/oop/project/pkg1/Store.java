@@ -25,6 +25,7 @@ public class Store {
     private String path;
     public Post currentPost;
     private TransactionManager transactionManager;
+    private final String CATALOG_DATABASE = "products.txt";
     private Stock catalog; // catalog instance
     
     public Store(String name , String path){
@@ -36,7 +37,7 @@ public class Store {
         this.path = path;
         transactionManager = new TransactionManager(this);
         //First check and see if this store has already been created
-        catalog = new Stock(); // creates an object of the Stock class
+        catalog = new Stock(CATALOG_DATABASE); // creates an object of the Stock class
         catalog.loadCatalog(); // loads catalog of products in memory
         
        

@@ -29,24 +29,25 @@ import java.util.Collections;
 public class Stock implements IStock {
 
     private ArrayList<Product> products; // list of products
-    private File catalog = new File("products.txt"); // catalog file
+    private File catalog;
     private String store = null; // store
     private StringBuilder productBuilder; // podruct builder to format for txt file
     /**
-     * Constructor: no arguments
+     * Constructor
+     * @param catalogDatabasePath  path to the database catalog 
      */
-    public Stock() {
+    public Stock(String catalogDatabasePath) {
         this.products = new ArrayList<>();
-        
+        this.catalog = new File(catalogDatabasePath);
     }
     /**
      * Contructor
      * @param storeName name of the store
      * @param catalogFileName  catalog file
      */
-    public Stock(String storeName, String catalogFileName) {
+    public Stock(String storeName, String catalogDatabasePath) {
         this.store = storeName;
-        this.catalog = new File(catalogFileName);
+        this.catalog = new File(catalogDatabasePath);
         this.products = new ArrayList<>();
         
     }

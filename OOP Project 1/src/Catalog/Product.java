@@ -1,5 +1,9 @@
 package Catalog;
 
+import java.text.DecimalFormat;
+
+
+
 /**
  *
  * @author Jose Ortiz Costa Description: This class represents a product from a
@@ -16,6 +20,8 @@ public class Product implements Comparable<Product> {
     private String upc;
     private String desc;
     private double price;
+    private int quantity;
+    private DecimalFormat formatter;
     private StringBuilder productBuilder;
     static final int UPC_STARS = 0;
     static final int UPC_ENDS = 4;
@@ -32,8 +38,14 @@ public class Product implements Comparable<Product> {
         this.upc = upc;
         this.desc = description;
         this.price = price;
+        formatter = new DecimalFormat("#0000.00");
     }
-
+    
+    public Product(String upc, int quantity) {
+        this.upc = upc;
+        this.quantity = quantity;
+        formatter = new DecimalFormat("#0000.00");
+    }
     public void setUPC(String upc) {
         this.upc = upc;
     }
@@ -45,7 +57,10 @@ public class Product implements Comparable<Product> {
     public void setPrice(double price) {
         this.price = price;
     }
-
+    
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
     public String getUPC() {
         return this.upc;
     }
@@ -56,6 +71,11 @@ public class Product implements Comparable<Product> {
 
     public double getPrice() {
         return this.price;
+    }
+    
+    public int getQuantity ()
+    {
+        return this.quantity;
     }
 
     /**
@@ -92,10 +112,11 @@ public class Product implements Comparable<Product> {
      * @param product Product Object
      */
     public void stringBuilderProduct(boolean outputMode) {
+        
         if (!outputMode) {
             stringBuilderAttribute(this.getUPC(), Product.UPC_STARS, Product.UPC_ENDS);
             stringBuilderAttribute(this.getDescription(), Product.DESC_STARS, Product.DESC_ENDS);
-            stringBuilderAttribute(String.valueOf(this.getPrice()), Product.PRICE_STARS, Product.PRICE_ENDS);
+            stringBuilderAttribute(formatter.format(this.getPrice()), Product.PRICE_STARS, Product.PRICE_ENDS);
         } else {
             int descriptionStarts = 0,
                     descriptionEnds = Product.DESC_ENDS - Product.DESC_STARS,

@@ -5,23 +5,25 @@
  */
 package oop.project.pkg1.transaction;
 
-import oop.project.pkg1.Store;
+import Post.*;
+import java.io.BufferedReader;
+import java.util.ArrayList;
+
 
 /**
  *
  * @author mac
  */
-import java.io.BufferedReader;
-import java.util.ArrayList;
 
 
 public class TransactionManager {
     private static ArrayList<Customer> customerList;
-    private Store store;
-    public TransactionManager (Store _store)
-    {
-        this.store = _store;
+    private Post currentPost;
+    
+    public TransactionManager (Post _post){
+        this.currentPost = _post;
     }
+    
     public static ArrayList<Customer> getTransactions() {
 		if (customerList == null) {
 			TransactionReader.viewTransactions();

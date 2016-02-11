@@ -5,7 +5,7 @@
  */
 package oop.project.pkg1;
 
-import java.util.Scanner;
+
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -21,46 +21,12 @@ public class OOPProject1 {
      */
     
     public static void main(String[] args) {
-        String option;
-        String path = "./stores/";
 
         // TODO code application logic here
         System.out.println("Initializing Store System");
-        Scanner sc = new Scanner(System.in);
-
-        while (true) {
-            System.out.println("\n\n\n***SYSTEM CONTROL***");
-            System.out.println("Enter Store name to load/create store, or \"exit\"");
-            option = sc.nextLine();
-            if (option.equals("exit")) {
-                break;
-            } else if (Files.isDirectory(Paths.get("./stores/" + option))) {
-
-                Store currentStore = new Store(option , path);
-                currentStore.runStore();
-
-            } else {
-               
-               while (true) {
-                    System.out.println("***SYSTEM CONTROL***");
-                    System.out.println("Store Data not found. Would you like to create a new store? (yes/no)");
-                    option = sc.nextLine();
-                    if (option.equals("yes") || option.equals("y")) {
-                       
-                        Store.createStore(option);
-                        Store currentStore = new Store(option , path);
-                        currentStore.runStore();
-                        
-                        break;
-                    } else if (option.equals("no") || option.equals("n")) {
-                        break;
-                    } else {
-                        System.out.println("Invalid Entry, Try Again");
-                    }
-                }
-            }
-        }
-
+        Store currentStore = new Store("Walmart");
+        currentStore.runStore();
     }
+
 
 }

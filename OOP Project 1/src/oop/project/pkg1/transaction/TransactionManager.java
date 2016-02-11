@@ -11,22 +11,18 @@ import oop.project.pkg1.Store;
  *
  * @author mac
  */
-//trial
+import java.io.BufferedReader;
+import java.util.ArrayList;
+
+
 public class TransactionManager {
-    private Store parentStore;
-    private String path;
-    
-    public TransactionManager(Store _parentStore){
-        this.parentStore = _parentStore;
-        this.path = this.parentStore.getPath();
-    }
-    
-    public void makeTransaction(){
-        
-    }
-    
-    public void viewTransaction(){
-        
-    }
-    
+    private static ArrayList<Customer> customerList;
+
+    public static ArrayList<Customer> getTransactions() {
+		if (customerList == null) {
+			TransactionReader.viewTransactions();
+		}
+
+		return customerList;
+	}  
 }

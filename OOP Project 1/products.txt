@@ -1,3 +1,4 @@
-0001     first product            0090.33 
-0002     second product           0050.30 
-0003     third product            1110.30
+0001     First product            0090.33 
+0002     Second product           0050.30 
+0003     Third product            1110.30
+0004     Fourth Product           7688.99  

@@ -35,7 +35,6 @@ public class Store {
         this.storeName = name;
         this.path = path;
         transactionManager = new TransactionManager(this);
-        
         //First check and see if this store has already been created
         catalog = new Stock(); // creates an object of the Stock class
         catalog.loadCatalog(); // loads catalog of products in memory

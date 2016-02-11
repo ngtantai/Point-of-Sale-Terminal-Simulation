@@ -1,0 +1,14 @@
+Customer 1
+1111
+Ipad Pro 64Gb
+CASH/CHECK $0900.50
+
+Customer 2
+1112      3
+Charger Ipad
+Credit 65432
+	
+Customer 3
+1113      5
+Apple Pen
+CASH/CHECK $0099.30

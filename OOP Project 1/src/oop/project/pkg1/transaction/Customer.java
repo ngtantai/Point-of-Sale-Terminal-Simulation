@@ -7,13 +7,14 @@ package oop.project.pkg1.transaction;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import Catalog.Product;
 
 /**
  *
  * @author Tai
  */
 public class Customer {
-        private ArrayList<ProductRecorded> itemList = new ArrayList<ProductRecorded>(); // items recorded from transaction.txt file
+        private ArrayList<Product> itemList = new ArrayList<>(); // items recorded from transaction.txt file
 	private Payment payment; // customer can make payment
         private String name; // customer has name
 
@@ -29,13 +30,13 @@ public class Customer {
 		this.name = name;
 	}
 
-	public Customer(String name, ArrayList<ProductRecorded> items, Payment payment) {
+	public Customer(String name, ArrayList<Product> items, Payment payment) {
 		this.name = name;
 		this.itemList = items;
 		this.payment = payment;
 	}
 
-	public void addItem(ProductRecorded item) {
+	public void addItem(Product item) {
 		itemList.add(item);
 	}
 	
@@ -43,7 +44,7 @@ public class Customer {
 		this.payment = payment;
 	}
 
-	public ArrayList<ProductRecorded> getAllRecordedItems() {
+	public ArrayList<Product> getAllRecordedItems() {
 		return itemList;
 	}
 

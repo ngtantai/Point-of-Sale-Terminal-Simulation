@@ -10,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import Catalog.Product;
 
 /**
  *
@@ -46,7 +47,8 @@ public class TransactionReader {
 		line = bufferedReader.readLine();
 		while (!line.contains("CREDIT") && !line.contains("CHECK") && !line.contains("CASH") && !line.equals("")) {
                     String[] array = line.split("[ ]+");
-                    ProductRecorded product = new ProductRecorded(array[0], Integer.parseInt(array[1]));
+                    //ProductRecorded product = new ProductRecorded(array[0], Integer.parseInt(array[1]));
+                    Product product = new Product(array[0], Integer.parseInt(array[1]));
                     newCustomer.addItem(product);
                     line = bufferedReader.readLine();
 		}

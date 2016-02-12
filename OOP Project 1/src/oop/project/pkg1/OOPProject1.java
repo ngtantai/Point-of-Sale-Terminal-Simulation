@@ -24,7 +24,11 @@ public class OOPProject1 {
 
         // TODO code application logic here
         System.out.println("Initializing Store System");
+        
+        //Just for testing
         Store currentStore = new Store("Walmart");
+        
+        //This will initialize the store's "Server"
         currentStore.runStore();
     }
 

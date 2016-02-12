@@ -24,7 +24,8 @@ public final class Post{
         //Reference to the store it belongs
         this.parentStore = _parentStore;
         this.transactionManager = new TransactionManager(this);
-        System.out.println("Post Initialized!");
+        System.out.println("Initializing Post");
+        
         
         
         
@@ -32,20 +33,26 @@ public final class Post{
     }
     
     public void runPost(){
+        System.out.println("Post Running");
         
 
         //For now just get an array of transactions and process them (Replace with gui later)
         ArrayList<Transaction> transactions = this.transactionManager.getTransactions();
-        
+       
         //Now we loop through each transaction and communicate with the "Store Server" To check if the transactions go through
         for (Transaction transaction : transactions) {
             
             //Check for transaction
             this.parentStore.verifyTransaction(transaction);
             
+            //Test Output
+            System.out.println(transaction.getTimeStamp());
+            
             //If it is approved, then print an invoice
+            
 
         }
+
     }
     
  

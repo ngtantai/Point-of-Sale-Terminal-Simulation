@@ -60,6 +60,7 @@ public class Store {
     }
     
     public boolean verifyTransaction(Transaction transaction){
+       
         return true;
     }
 

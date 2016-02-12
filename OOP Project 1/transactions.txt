@@ -7,7 +7,7 @@ CASH      $1501.60
 Customer2
 1112      3
 1116      1
-Credit    65432
+CREDIT    65432
 	
 Customer3
 1111      1

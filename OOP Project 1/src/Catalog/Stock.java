@@ -129,9 +129,11 @@ public class Stock implements IStock {
             if (!this.isProductInStock(product.getUPC()))
             {
                FileWriter fw = new FileWriter(this.catalog, true);
-               fw.write("\n" + product.productWritterToString());
-               fw.flush();
-               fw.close();
+               BufferedWriter writer = new BufferedWriter(fw);
+               writer.write("\n" + product.productWritterToString());
+               writer.flush();
+               writer.close();
+               
                return true;
             }
         }

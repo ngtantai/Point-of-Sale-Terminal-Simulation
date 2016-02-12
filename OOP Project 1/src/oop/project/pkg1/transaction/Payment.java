@@ -7,7 +7,8 @@ package oop.project.pkg1.transaction;
 public class Payment {
 
 	private double amount;
-	private String type; // payment methods
+        private String type; // payment methods
+	
 
 	public Payment(double amount, String type) {
 		this.amount = amount;
@@ -45,4 +46,9 @@ public class Payment {
 	public void setType(String type) {
 		this.type = type;
 	}
+        
+        public String getType ()
+        {
+            return this.type;
+        }
 }

@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package oop.project.pkg1;
+package Server;
 
+import Transactions.Transaction;
+import Transactions.Invoice;
 import Post.*;
 import java.io.File;
 import java.util.Scanner;
@@ -14,7 +16,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import Catalog.*; // Imports catalog package
 import PaymentVerifier.*;
-import oop.project.pkg1.transaction.*;
 
 
 /**

@@ -1,4 +1,4 @@
-package oop.project.pkg1.transaction;
+package Transactions;
 
 import Catalog.Product;
 import java.io.BufferedReader;
@@ -10,7 +10,7 @@ import java.io.InputStreamReader;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import oop.project.pkg1.Store;
+import Server.Store;
 
 /**
  *

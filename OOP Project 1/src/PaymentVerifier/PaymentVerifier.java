@@ -10,7 +10,7 @@ package PaymentVerifier;
  * @author mac
  */
 import java.util.Random;
-import oop.project.pkg1.transaction.Invoice;
+import Transactions.Invoice;
 
 
 public class PaymentVerifier {

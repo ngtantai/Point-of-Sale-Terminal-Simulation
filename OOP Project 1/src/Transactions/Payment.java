@@ -1,4 +1,4 @@
-package oop.project.pkg1.transaction;
+package Transactions;
 
 import Catalog.Product;
 import java.util.ArrayList;

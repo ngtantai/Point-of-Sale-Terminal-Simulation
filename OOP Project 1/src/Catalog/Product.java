@@ -64,7 +64,12 @@ public class Product implements Comparable<Product> {
         formatter = new DecimalFormat("#0000.00");
     }
     
-    
+    public Product(Product anotherProduct){
+       
+        this.upc = anotherProduct.upc;
+        this.desc = anotherProduct.desc;
+        this.price = anotherProduct.price;
+    }
 
     //setters
     public void setUPC(String upc) {

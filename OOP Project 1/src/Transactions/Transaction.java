@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package oop.project.pkg1.transaction;
+package Transactions;
 
 import Catalog.Product;
 import Catalog.Stock;

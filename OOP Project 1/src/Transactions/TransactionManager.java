@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package oop.project.pkg1.transaction;
+package Transactions;
 
 import Catalog.Product;
 import Post.*;
@@ -54,7 +54,7 @@ public class TransactionManager {
                 while (!line.contains("CREDIT") && !line.contains("CHECK") && !line.contains("CASH")) {
                     
                     upcLine = line.split("[ ]+");
-                    currentProduct = this.currentPost.getProductByUPC(upcLine[0]);
+                    currentProduct = this.currentPost.generateProductByUPC(upcLine[0]);
                     if (upcLine.length == 1) {
                         currentProduct.setQuantity(1);
                     } else {
@@ -72,10 +72,10 @@ public class TransactionManager {
                         payment = new Payment(Payment.CREDIT, Payment.calculateTotal(products), Integer.parseInt(paymentInfo[1]));
                         break;
                     case "CHECK":
-                        payment = new Payment(Payment.CHECK, Double.parseDouble(paymentInfo[1].substring(1)));
+                        payment = new Payment(Payment.CHECK, Double.parseDouble(paymentInfo[1]));
                         break;
                     default:
-                        payment = new Payment(Payment.CASH, Double.parseDouble(paymentInfo[1].substring(1)));
+                        payment = new Payment(Payment.CASH, Double.parseDouble(paymentInfo[1]));
                         break;
                 }
 

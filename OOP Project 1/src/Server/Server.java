@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package oop.project.pkg1;
+package Server;
 
 
 
@@ -12,7 +12,7 @@ package oop.project.pkg1;
  *
  * @author mac
  */
-public class OOPProject1 {
+public class Server {
 
     /**
      * Main driver program

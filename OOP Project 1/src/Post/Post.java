@@ -5,11 +5,13 @@
  */
 package Post;
 
+import Transactions.TransactionManager;
+import Transactions.Transaction;
+import Transactions.Invoice;
 import Catalog.Product;
 import Catalog.Stock;
 import java.util.ArrayList;
-import oop.project.pkg1.Store;
-import oop.project.pkg1.transaction.*;
+import Server.Store;
 
 
 
@@ -54,8 +56,8 @@ public final class Post{
 
     }
     
-    public Product getProductByUPC(String _upc){
-        return this.catalog.getProduct(_upc);
+    public Product generateProductByUPC(String _upc){
+        return new Product(this.catalog.getProduct(_upc));
     }
     
  

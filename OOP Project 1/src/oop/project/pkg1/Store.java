@@ -14,6 +14,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import Catalog.*; // Imports catalog package
 import PaymentVerifier.*;
+import oop.project.pkg1.transaction.Transaction;
 
 /**
  *
@@ -56,6 +57,10 @@ public class Store {
     public void viewCatalog() {
         catalog.viewCatalog();
 
+    }
+    
+    public boolean verifyTransaction(Transaction transaction){
+        return true;
     }
 
 }

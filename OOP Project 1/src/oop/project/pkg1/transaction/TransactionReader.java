@@ -17,6 +17,7 @@ import Catalog.Product;
  * @author Tai
  */
 public class TransactionReader {
+    /*
     private static ArrayList<Customer> customerList;
     private static String path = "C:\\Users\\Tai\\Documents\\NetBeansProjects\\668-868-POST1-master\\668-868-POST1-master\\src\\transactions.txt";
     private static BufferedReader bufferedReader;
@@ -28,6 +29,8 @@ public class TransactionReader {
     * @return	true	operation succeeded
     * @return	false	operation ended in error
     */
+    
+    /*
     public static boolean viewTransactions() {
         try { 
             bufferedReader = new BufferedReader(new FileReader(path));
@@ -69,4 +72,5 @@ public class TransactionReader {
         }
         return true;
     }       
+    */
 }

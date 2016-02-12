@@ -5,6 +5,7 @@
  */
 package Post;
 
+import java.util.ArrayList;
 import oop.project.pkg1.Store;
 import oop.project.pkg1.transaction.*;
 
@@ -31,8 +32,20 @@ public final class Post{
     }
     
     public void runPost(){
-        //this.transactionManager.getTransactions();
-        System.out.println("should be reading transactions here");
+        
+
+        //For now just get an array of transactions and process them (Replace with gui later)
+        ArrayList<Transaction> transactions = this.transactionManager.getTransactions();
+        
+        //Now we loop through each transaction and communicate with the "Store Server" To check if the transactions go through
+        for (Transaction transaction : transactions) {
+            
+            //Check for transaction
+            this.parentStore.verifyTransaction(transaction);
+            
+            //If it is approved, then print an invoice
+
+        }
     }
     
  

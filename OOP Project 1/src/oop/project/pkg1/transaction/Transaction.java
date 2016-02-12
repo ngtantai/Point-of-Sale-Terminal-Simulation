@@ -7,6 +7,7 @@ package oop.project.pkg1.transaction;
 
 import Catalog.Product;
 import Catalog.Stock;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 
@@ -17,19 +18,47 @@ import java.util.ArrayList;
 public class Transaction {
     public Customer customer;
     public Payment payment;
-    private String upc;
+    private LocalDateTime timeStamp;
     private double total;
+    private ArrayList<Product> products;
     
-    public Transaction (Customer customer)
+    public Transaction (Customer _customer, Payment _payment,  ArrayList<Product> _products )
     {
-        this.customer = customer;
-        setPayment(new Payment(98.00, "CHECK"));
+        //this.customer = customer;
+        this.customer = _customer;
+        this.payment = _payment;
+        this.total = Payment.calculateTotal(products);
+        this.products = _products;
+        this.timeStamp = LocalDateTime.now();
         
     }
+    
+    public double getTotal(){
+        return this.total;
+    }
+    
+    public LocalDateTime getTimeStamp(){
+        return this.timeStamp;
+    }
+    
     public void setPayment(Payment payment)
     {
         this.payment = payment;
     }
+    
+    public boolean isCashTransaction(){
+        return this.payment.getType() == Payment.CASH;
+    }
+    
+    public boolean isCreditTransaction(){
+        return this.payment.getType() == Payment.CREDIT;
+    }
+    
+    public boolean isCheckTransaction(){
+        return this.payment.getType() == Payment.CHECK;
+    }
+    
+    
     
     public void setCostumer (Customer customer)
     {
@@ -49,27 +78,8 @@ public class Transaction {
     
     public ArrayList <Product> getProducts ()
     {
-        // get upc from transaction 
-        // 
-        Stock catalog = new Stock("products.txt");
-        catalog.loadCatalog();
-        ArrayList <Product> products = new ArrayList<>();
-        //******* just for testing  delete later***************
-        // get products by a given upc
-        Product product1 = catalog.getProduct("1111"); 
-        Product product2 = catalog.getProduct("1112");
-        Product product3 = catalog.getProduct("1113");
-        product1.setQuantity(1);
-        product2.setQuantity(2);
-        product3.setQuantity(2);
-        // Logic here
-        // data for testing
-        products.add(product1);
-        products.add(product2);
-        products.add(product3);
-        
-        //************** end testing *****************
-        return products;
+
+        return this.products;
     }
     
     

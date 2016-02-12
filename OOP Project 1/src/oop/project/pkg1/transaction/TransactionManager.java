@@ -36,22 +36,23 @@ public class TransactionManager {
         Payment payment;
         String[] upcLine;
         String[] paymentInfo;
-
+        int n=1;
         try {
             bufferedReader = new BufferedReader(new FileReader("transactions.txt"));
+            String line;
 
-        } catch (FileNotFoundException exception) {
-            System.out.println(exception);
+            while ((line = bufferedReader.readLine()) != null) {
 
-        }
-        String line = " ";
-        while (line != null) {
-            try {
+                
                 products = new ArrayList<Product>();
-                line = bufferedReader.readLine();
+                
                 customer = new Customer(line);
+                
+          
+                
                 line = bufferedReader.readLine();
-                while (!line.contains("CREDIT") && !line.contains("CHECK") && !line.contains("CASH") && !line.equals("")) {
+                while (!line.contains("CREDIT") && !line.contains("CHECK") && !line.contains("CASH")) {
+                    
                     upcLine = line.split("[ ]+");
                     //ProductRecorded product = new ProductRecorded(array[0], Integer.parseInt(array[1]));
                     //Product product = new Product(array[0], Integer.parseInt(array[1]));
@@ -64,25 +65,31 @@ public class TransactionManager {
                     products.add(currentProduct);
                     line = bufferedReader.readLine();
                 }
+                //System.out.println(line);
                 paymentInfo = line.split("[ ]+");
+                //System.out.println(paymentInfo[1]);
                 switch (paymentInfo[0]) {
                     case "CREDIT":
                         payment = new Payment(Payment.CREDIT, Payment.calculateTotal(products), Integer.parseInt(paymentInfo[1]));
                         break;
                     case "CHECK":
-                        payment = new Payment(Payment.CHECK, Double.parseDouble(paymentInfo[1]));
+                        payment = new Payment(Payment.CHECK, Double.parseDouble(paymentInfo[1].substring(1)));
                         break;
                     default:
-                        payment = new Payment(Payment.CASH, Double.parseDouble(paymentInfo[1]));
+                        payment = new Payment(Payment.CASH, Double.parseDouble(paymentInfo[1].substring(1)));
                         break;
                 }
 
                 transactions.add(new Transaction(customer, payment, products));
                 line = bufferedReader.readLine();
-            } catch (Exception exception) {
-                System.out.println(exception);
-                break;
+               
+
+      
+
             }
+        } catch (Exception exception) {
+            System.out.println(exception);
+            //break;
         }
 
         return transactions;

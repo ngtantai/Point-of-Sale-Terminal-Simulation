@@ -19,15 +19,15 @@ public class Transaction {
     public Customer customer;
     public Payment payment;
     private LocalDateTime timeStamp;
-    private double total;
+    private double total =0.0;
     private ArrayList<Product> products;
     
     public Transaction (Customer _customer, Payment _payment,  ArrayList<Product> _products )
     {
-        //this.customer = customer;
+       
         this.customer = _customer;
         this.payment = _payment;
-        this.total = Payment.calculateTotal(products);
+       // this.total = Payment.calculateTotal(products);
         this.products = _products;
         this.timeStamp = LocalDateTime.now();
         

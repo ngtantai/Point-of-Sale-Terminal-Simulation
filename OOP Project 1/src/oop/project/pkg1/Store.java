@@ -14,7 +14,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import Catalog.*; // Imports catalog package
 import PaymentVerifier.*;
-import oop.project.pkg1.transaction.Transaction;
+import oop.project.pkg1.transaction.*;
+
 
 /**
  *
@@ -49,6 +50,10 @@ public class Store {
     public void runStore() {
 
     }
+    
+    public Stock getCatalog(){
+        return this.catalog;
+    }
 
     public void test() {
         System.out.println("test");
@@ -59,9 +64,20 @@ public class Store {
 
     }
     
-    public boolean verifyTransaction(Transaction transaction){
-       
-        return true;
+    public Invoice verifyTransaction(Transaction transaction){
+        Invoice invoice = new Invoice(transaction , this);
+        
+        //Do some basic checking like random chance that check/credit card is bad or fake bills
+        if(!paymentVerifier.verify(invoice)){
+           
+            invoice.setValid(false);
+        }
+        invoice.saveInSalesLog();
+        return invoice;
+    }
+    
+    public String getName(){
+        return this.storeName;
     }
 
 }

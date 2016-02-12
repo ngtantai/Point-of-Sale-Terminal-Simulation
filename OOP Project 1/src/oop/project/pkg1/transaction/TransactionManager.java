@@ -36,7 +36,7 @@ public class TransactionManager {
         Payment payment;
         String[] upcLine;
         String[] paymentInfo;
-        int n=1;
+        
         try {
             bufferedReader = new BufferedReader(new FileReader("transactions.txt"));
             String line;
@@ -54,12 +54,11 @@ public class TransactionManager {
                 while (!line.contains("CREDIT") && !line.contains("CHECK") && !line.contains("CASH")) {
                     
                     upcLine = line.split("[ ]+");
-                    //ProductRecorded product = new ProductRecorded(array[0], Integer.parseInt(array[1]));
-                    //Product product = new Product(array[0], Integer.parseInt(array[1]));
+                    currentProduct = this.currentPost.getProductByUPC(upcLine[0]);
                     if (upcLine.length == 1) {
-                        currentProduct = new Product(upcLine[0], 1);
+                        currentProduct.setQuantity(1);
                     } else {
-                        currentProduct = new Product(upcLine[0], Integer.parseInt(upcLine[1]));
+                        currentProduct.setQuantity(Integer.parseInt(upcLine[1]));
                     }
 
                     products.add(currentProduct);

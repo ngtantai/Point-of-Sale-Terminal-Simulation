@@ -5,6 +5,8 @@
  */
 package Post;
 
+import Catalog.Product;
+import Catalog.Stock;
 import java.util.ArrayList;
 import oop.project.pkg1.Store;
 import oop.project.pkg1.transaction.*;
@@ -18,12 +20,15 @@ import oop.project.pkg1.transaction.*;
 public final class Post{
     private Store parentStore;
     private TransactionManager transactionManager;
+    private Stock catalog; // its own copy of the catalog for display purposes
+    private Invoice invoice;
     
 
     public Post(Store _parentStore) {
         //Reference to the store it belongs
         this.parentStore = _parentStore;
         this.transactionManager = new TransactionManager(this);
+        this.catalog = this.parentStore.getCatalog();
         System.out.println("Initializing Post");
         
         
@@ -33,7 +38,7 @@ public final class Post{
     }
     
     public void runPost(){
-        System.out.println("Post Running");
+        System.out.println("***Post Running***\n\n\n");
         
 
         //For now just get an array of transactions and process them (Replace with gui later)
@@ -43,16 +48,14 @@ public final class Post{
         for (Transaction transaction : transactions) {
             
             //Check for transaction
-            this.parentStore.verifyTransaction(transaction);
-            
-            //Test Output
-            System.out.println(transaction.getTimeStamp());
-            
-            //If it is approved, then print an invoice
-            
-
+            invoice = this.parentStore.verifyTransaction(transaction);
+            invoice.printInvoice();
         }
 
+    }
+    
+    public Product getProductByUPC(String _upc){
+        return this.catalog.getProduct(_upc);
     }
     
  

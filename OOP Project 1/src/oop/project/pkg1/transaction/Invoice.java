@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import oop.project.pkg1.Store;
 
 /**
  *
@@ -22,47 +23,46 @@ import java.util.Date;
  * @see Payment class
  */
 public class Invoice {
-
+    private Store store;
     private Transaction transaction;
     private double subtotal;
     private double total;
-    private double tendered;
-    private double returned;
+    private double tendered = 0.0;
+    private double returned = 0.0;
     static double TAXES = 4.50;
-    ArrayList<Product> products;
+    public boolean valid = true;
+    private ArrayList<Product> products;
 
-    /**
-     * Constructor
-     */
-    public Invoice() {
-
-    }
 
     /**
      * Constructor
      *
+     * @param _customer
      * @param _transaction Transaction Object
      */
-    public Invoice(Transaction _transaction) {
+    public Invoice (Transaction _transaction, Store _store ){
+ 
         this.transaction = _transaction;
-        this.products = _transaction.getProducts();
-        setTotal(this.transaction.getPayment().getAmount());
-        setAmountTendered(1000.50);
-        setAmountReturned(this.tendered - this.total);
+        this.store = _store;
+        this.products = transaction.getProducts();
+        
+        
+        setAmountReturned(transaction.getAmountPaid()-transaction.getTotal());
+        
 
     }
 
     // Setters
-    public void setSubTotal(double subtotal) {
-        this.subtotal = subtotal;
-    }
+  
 
     public void setAmountTendered(double tendered) {
         this.tendered = tendered;
     }
 
-    public void setAmountReturned(double returned) {
-        this.returned = returned;
+    public void setAmountReturned(double _returned) {
+        
+        this.returned = _returned;
+        //if (this.returned > 0) this.valid = false;
     }
 
     public void setTotal(double total) {
@@ -70,10 +70,8 @@ public class Invoice {
     }
 
     // Getters
-    public double getSubTotal() {
-        // subtotal without taxes included
-        // this.subtotal = transaction.getQuantity() * transaction.getPrice();
-        return this.subtotal;
+    public double getTotalPaid(){
+        return this.transaction.getAmountPaid();
     }
 
     public double getAmountTendered() {
@@ -91,13 +89,21 @@ public class Invoice {
 
     public double getTotal() {
         // compute total amount including taxes
-        return this.total;
+        return this.transaction.getTotal();
     }
 
     // prints a single invoice into the salesLog db
     public void printInvoice() {
-        this.toString();
+        System.out.println(this.toString());
 
+    }
+    
+    public boolean isValid(){
+        return this.valid;
+    }
+    
+    public void setValid(boolean _valid){
+        this.valid = _valid;
     }
 
     /**
@@ -105,9 +111,9 @@ public class Invoice {
      *
      * @param salesLogFile
      */
-    public void saveInSalesLog(String salesLogFile) {
+    public void saveInSalesLog() {
         try {
-            FileWriter writer = new FileWriter(salesLogFile, true);
+            FileWriter writer = new FileWriter("salesLog.txt", true);
             writer.write(this.toString());
             writer.close();
         } catch (IOException err) {
@@ -148,10 +154,10 @@ public class Invoice {
         String invoicePart1, invoicePart2 = "", invoicePart3, formattedPart1,
                 formattedPart2, formattedPart3, separator, tenderedStr;
         formattedPart1 = "%-20s %-15s%n";
-        formattedPart2 = "%-20s %-30s %8.2f%n";
+        formattedPart2 = "%-20s %-30s $%8.2f%n";
 
-        invoicePart1 = String.format(formattedPart1, "Store1", getInvoiceDate())
-                + String.format(formattedPart1, transaction.getCustomer().getName(), "");
+        invoicePart1 = String.format(formattedPart1, this.store.getName() , getInvoiceDate())
+                + String.format(formattedPart1, transaction.getCustomerName(), "");
 
         for (i = 0; i < products.size(); i++) {
             invoicePart2 += String.format(formattedPart2, products.get(i).getDescription(),
@@ -164,17 +170,28 @@ public class Invoice {
         separator = "-----------------------------------------------------------\n";
         if (transaction.isCreditTransaction()
                 || transaction.isCheckTransaction()) {
-            tenderedStr = "Paid by " + transaction.getPayment().getType();
-            setAmountTendered(getTotal());
+            tenderedStr = "Paid by " + transaction.getPaymentTypeString();
+            //setAmountTendered(getTotal());
 
         } else {
             tenderedStr = "Amount Tendered ";
         }
 
         invoicePart3 = String.format(formattedPart2, "Total", "", getTotal())
-                + String.format(formattedPart2, tenderedStr, "", getAmountTendered())
-                + String.format("Amount returned", "", getAmountReturned());
+                + String.format(formattedPart2, tenderedStr, "", this.transaction.getAmountPaid())
+                + String.format(formattedPart2, "Amount returned", "", getAmountReturned());
 
+        
+        if(this.valid){
+            invoicePart3 = String.format(formattedPart2, "Total", "", getTotal())
+                + String.format(formattedPart2, tenderedStr, "", this.transaction.getAmountPaid())
+                + String.format(formattedPart2, "Amount returned", "", getAmountReturned());
+        }else{
+            invoicePart3 = String.format(formattedPart2, "Total", "", getTotal())
+                + String.format(formattedPart2, tenderedStr, "", this.transaction.getAmountPaid())
+                + "*****INVALID TRANSACTION*****\n";
+        }
+        
         return invoicePart1 + invoicePart2 + separator + invoicePart3 + "\n\n";
 
     }

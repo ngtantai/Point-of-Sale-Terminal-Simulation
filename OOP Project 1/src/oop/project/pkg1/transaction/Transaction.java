@@ -22,16 +22,17 @@ public class Transaction {
     public Payment payment;
     private LocalDateTime timeStamp;
     private double total =0.0;
-    private ArrayList<Product> products;
+    protected ArrayList<Product> products;
+    public boolean valid = true;
     
     public Transaction (Customer _customer, Payment _payment,  ArrayList<Product> _products )
     {
        
         this.customer = _customer;
         this.payment = _payment;
-       // this.total = Payment.calculateTotal(products);
         this.products = _products;
         this.timeStamp = LocalDateTime.now();
+        this.total = Payment.calculateTotal(this.products);
         
     }
     
@@ -60,6 +61,13 @@ public class Transaction {
         return this.payment.getType() == Payment.CHECK;
     }
     
+    public boolean isValid(){
+        return this.valid;
+    }
+    
+    public void setValid(boolean _valid){
+        this.valid = _valid;
+    }
     
     
     public void setCostumer (Customer customer)
@@ -75,6 +83,26 @@ public class Transaction {
     public Customer getCustomer ()
     {
         return this.customer;
+    }
+    
+    public String getCustomerName(){
+        return this.customer.getName();
+    }
+    
+    public double getAmountPaid(){
+        return this.payment.getAmount();
+    }
+    
+    public String getPaymentTypeString(){
+        String paymentType = "";
+        if(this.isCashTransaction()){
+           paymentType = "CASH"; 
+        }else if(this.isCheckTransaction()){
+            paymentType = "CHECK";
+        }else if(this.isCreditTransaction()){
+            paymentType = "CREDIT";
+        }
+        return paymentType;
     }
    
     

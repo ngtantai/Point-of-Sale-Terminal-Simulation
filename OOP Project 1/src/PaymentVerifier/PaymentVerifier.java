@@ -10,22 +10,24 @@ package PaymentVerifier;
  * @author mac
  */
 import java.util.Random;
+import oop.project.pkg1.transaction.Invoice;
 
 
 public class PaymentVerifier {
     private Random randomGen;
     private int randomChance;
+    private Invoice invoice;
     
     public PaymentVerifier(){
         randomGen = new Random();
     }
     
-    public boolean verifyPayment(){
+    public boolean verify(Invoice invoice){
         
         
         randomChance = randomGen.nextInt(9);
         
-        if(randomChance == 0){
+        if(randomChance == 0 || (invoice.getAmountReturned() < 0)){
             
             return false;
         }else{

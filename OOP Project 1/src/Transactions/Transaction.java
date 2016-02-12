@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Transactions;
 
 import Catalog.Product;
@@ -14,15 +9,25 @@ import java.util.ArrayList;
 
 
 /**
- *
- * @author mac
+ *@description This is the transaction class it handles the details for performing a transaction at a store
+ * 
+ * @author Brian Parra
+ * @param Customer The customer associate with the transaction
+ * @param Payment The payment object
+ * @param timeStamp The time of the transaction
+ * @param total The total cost of the transaction
+ * @param amountPaid The total amount paid. This can be different from the total
+ * @param products Arraylist of products purchased
+ * @param valid Boolean describing if this transaction is valid or not
+ * 
  */
 public class Transaction {
     public Customer customer;
     public Payment payment;
-    private LocalDateTime timeStamp;
-    private double total =0.0;
-    protected ArrayList<Product> products;
+    public LocalDateTime timeStamp;
+    public double total =0.0;
+    public double amountPaid = 0.0;
+    public ArrayList<Product> products;
     public boolean valid = true;
     
     public Transaction (Customer _customer, Payment _payment,  ArrayList<Product> _products )
@@ -33,6 +38,7 @@ public class Transaction {
         this.products = _products;
         this.timeStamp = LocalDateTime.now();
         this.total = Payment.calculateTotal(this.products);
+        this.amountPaid = this.payment.getAmount();
         
     }
     
@@ -90,7 +96,7 @@ public class Transaction {
     }
     
     public double getAmountPaid(){
-        return this.payment.getAmount();
+        return this.amountPaid;
     }
     
     public String getPaymentTypeString(){

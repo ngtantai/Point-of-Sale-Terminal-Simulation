@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Server;
 
 
@@ -10,7 +5,8 @@ package Server;
 
 /**
  *
- * @author mac
+ * @author Brian Parra
+ * @description This is just the driver program. It is supposed to be a "Server that instantiates a StoreServer"
  */
 public class Server {
 
@@ -25,7 +21,7 @@ public class Server {
         System.out.println("Initializing Store System");
         
         //Just for testing
-        Store currentStore = new Store("Walmart");
+        StoreServer currentStore = new StoreServer("Walmart");
         
         //This will initialize the store's "Server"
         currentStore.runStore();

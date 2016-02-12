@@ -10,7 +10,7 @@ import java.io.InputStreamReader;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import Server.Store;
+import Server.StoreServer;
 
 /**
  *
@@ -23,7 +23,7 @@ import Server.Store;
  * @see Payment class
  */
 public class Invoice {
-    private Store store;
+    private StoreServer store;
     private Transaction transaction;
     private double subtotal;
     private double total;
@@ -40,7 +40,7 @@ public class Invoice {
      * @param _customer
      * @param _transaction Transaction Object
      */
-    public Invoice (Transaction _transaction, Store _store ){
+    public Invoice (Transaction _transaction, StoreServer _store ){
  
         this.transaction = _transaction;
         this.store = _store;

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Post;
 
 import Transactions.TransactionManager;
@@ -11,22 +6,26 @@ import Transactions.Invoice;
 import Catalog.Product;
 import Catalog.Stock;
 import java.util.ArrayList;
-import Server.Store;
+import Server.StoreServer;
 
 
 
 /**
  *
- * @author mac
+ * @author Brian Parra
+ * @description: This class represents the view controller for the POST. The idea is that there can be many POST's that communicate with
+ * StoreServer objects.
+ * 
+ * 
  */
 public final class Post{
-    private Store parentStore;
+    private StoreServer parentStore;
     private TransactionManager transactionManager;
     private Stock catalog; // its own copy of the catalog for display purposes
     private Invoice invoice;
     
 
-    public Post(Store _parentStore) {
+    public Post(StoreServer _parentStore) {
         //Reference to the store it belongs
         this.parentStore = _parentStore;
         this.transactionManager = new TransactionManager(this);

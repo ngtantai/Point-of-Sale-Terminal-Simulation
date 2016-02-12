@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Server;
 
 import Transactions.Transaction;
@@ -20,9 +15,13 @@ import PaymentVerifier.*;
 
 /**
  *
- * @author mac
+ * @author Brian Parra
+ * @Description This is supposed to be an instance of a store server. Pretend that when you instantiate it you can tell it which port to listen to and 
+ * what not. There can be multiple StoreServers if you have multiple server racks at your store. Posts will connect to available StoreServers;
+ * 
+ * 
  */
-public class Store {
+public class StoreServer {
 
     private PaymentVerifier paymentVerifier;
     public String storeName;
@@ -31,7 +30,7 @@ public class Store {
     private final String CATALOG_DATABASE = "products.txt";
     private Stock catalog; // catalog instance
 
-    public Store(String name) {
+    public StoreServer(String name) {
 
         //Initialize stuff here needs to read in data and what not
         this.storeName = name;

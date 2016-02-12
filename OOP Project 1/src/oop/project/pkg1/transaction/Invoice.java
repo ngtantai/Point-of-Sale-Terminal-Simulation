@@ -162,8 +162,8 @@ public class Invoice {
         }
 
         separator = "-----------------------------------------------------------\n";
-        if (transaction.getPayment().getType().equals("CREDIT")
-                || transaction.getPayment().getType().equals("CHECK")) {
+        if (transaction.isCreditTransaction()
+                || transaction.isCheckTransaction()) {
             tenderedStr = "Paid by " + transaction.getPayment().getType();
             setAmountTendered(getTotal());
 

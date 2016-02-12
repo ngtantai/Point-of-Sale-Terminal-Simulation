@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Transactions;
 
 import Catalog.Product;
@@ -15,7 +10,8 @@ import java.util.ArrayList;
 
 /**
  *
- * @author mac
+ * @author Brian Parra
+ * This class is for building Transaction objects. The temp version just reads them off a file. Next version should pull data off the GUI
  */
 public class TransactionManager {
 
@@ -24,10 +20,18 @@ public class TransactionManager {
 
     private final Post currentPost;
 
+    /**
+     * Initializer
+     * @param _post reference to Post that initialized it
+     */
     public TransactionManager(Post _post) {
         this.currentPost = _post;
     }
 
+    /**
+     * This pulls the transactions off of transactions.txt
+     * @return ArrayList of Transactions
+     */
     public ArrayList<Transaction> getTransactions() {
         transactions = new ArrayList<Transaction>();
         ArrayList<Product> products;

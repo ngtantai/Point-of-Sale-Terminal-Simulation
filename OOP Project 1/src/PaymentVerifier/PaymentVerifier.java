@@ -1,13 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package PaymentVerifier;
 
 /**
  *
- * @author mac
+ * @author Brian Parra
  */
 import java.util.Random;
 import Transactions.Invoice;
@@ -18,10 +13,18 @@ public class PaymentVerifier {
     private int randomChance;
     private Invoice invoice;
     
+    /**
+     * Constructor
+     */
     public PaymentVerifier(){
         randomGen = new Random();
     }
     
+    /**
+     * Takes an invoice And does some simple checking to see if its valid
+     * @param invoice invoice to process
+     * @return true if valid invoice
+     */
     public boolean verify(Invoice invoice){
         
         

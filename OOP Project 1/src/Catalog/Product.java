@@ -5,13 +5,8 @@ import java.text.DecimalFormat;
 /**
  *
  * @author Jose Ortiz Costa
- * @Description: This class represents a product from a catalog with its
- * properties ( UPC, description and price ) 
- * @Date: 02/09/2016 Date: 02/09/2016
- * @Modified: 02/09/2016 
- * @USAGE: Product product = new Product ("0001", "product
- * description", 1234.89); or Product product = new Product (); and set all the
- * properties with the setters.
+ * This class represents a product from a catalog with its
+ * properties ( UPC, description and price )
  *
  */
 public class Product implements Comparable<Product> {
@@ -41,9 +36,9 @@ public class Product implements Comparable<Product> {
     /**
      * Constructor
      *
-     * @param upc
-     * @param description
-     * @param price
+     * @param upc Upc number
+     * @param description Text description of Product
+     * @param price Price of product
      */
     public Product(String upc, String description, double price) {
         this.upc = upc;
@@ -55,52 +50,88 @@ public class Product implements Comparable<Product> {
     /**
      * Constructor
      *
-     * @param upc
-     * @param quantity
+     * @param upc Upc of item
+     * @param quantity quantity purchased
      */
     public Product(String upc, int quantity) {
         this.upc = upc;
         this.quantity = quantity;
         formatter = new DecimalFormat("#0000.00");
     }
-    
-    public Product(Product anotherProduct){
-       
+
+    public Product(Product anotherProduct) {
+
         this.upc = anotherProduct.upc;
         this.desc = anotherProduct.desc;
         this.price = anotherProduct.price;
     }
 
     //setters
+    /**
+     * Setter for upc
+     *
+     * @param upc upc to set
+     */
     public void setUPC(String upc) {
         this.upc = upc;
     }
 
+    /**
+     * Sets description
+     *
+     * @param description string to describe
+     */
     public void setDescription(String description) {
         this.desc = description;
     }
 
+    /**
+     * Set Price of Product
+     *
+     * @param price to set
+     */
     public void setPrice(double price) {
         this.price = price;
     }
 
+    /**
+     * Used for purchasing quantity
+     *
+     * @param quantity quantity to set
+     */
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
+    /**
+     * Getter for upc
+     *
+     * @return upc for product
+     */
     public String getUPC() {
         return this.upc;
     }
 
+    /**
+     *
+     * @return product description
+     */
     public String getDescription() {
         return this.desc;
     }
 
-  
+    /**
+     *
+     * @return price
+     */
     public double getPrice() {
         return this.price;
     }
 
+    /**
+     *
+     * @return quantity
+     */
     public int getQuantity() {
         return this.quantity;
     }
@@ -141,7 +172,7 @@ public class Product implements Comparable<Product> {
     /**
      * Format a product, so it can be added to the txt file.
      *
-     * @param product Product Object
+     * @param outputMode Product Object
      */
     public void stringBuilderProduct(boolean outputMode) {
 

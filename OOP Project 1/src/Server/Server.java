@@ -6,7 +6,7 @@ package Server;
 /**
  *
  * @author Brian Parra
- * @description This is just the driver program. It is supposed to be a "Server that instantiates a StoreServer"
+ * This is just the driver program. It is supposed to be a "Server that instantiates a StoreServer"
  */
 public class Server {
 
@@ -23,8 +23,7 @@ public class Server {
         //Just for testing
         StoreServer currentStore = new StoreServer("Walmart");
         
-        //This will initialize the store's "Server"
-        currentStore.runStore();
+    
     }
 
 

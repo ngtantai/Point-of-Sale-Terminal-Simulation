@@ -14,12 +14,11 @@ import Server.StoreServer;
 
 /**
  *
- * @author Jose Ortiz Costa
- * @Description: This class contains all the methods and properties of a invoice
+ * @author Jose Ortiz Costa and Brian Parra
+ * This class contains all the methods and properties of a invoice
  * This class takes an object of the Transaction class as argument and prints a
  * formatted invoice on the screen
  * @see Transaction class
- * @see SalesLog class
  * @see Payment class
  */
 public class Invoice {
@@ -37,7 +36,7 @@ public class Invoice {
     /**
      * Constructor
      *
-     * @param _customer
+     * @param _store Store which this transaction belongs to
      * @param _transaction Transaction Object
      */
     public Invoice (Transaction _transaction, StoreServer _store ){
@@ -54,54 +53,96 @@ public class Invoice {
 
     // Setters
   
-
+    /**
+     * Sets amount paid 
+     * @param tendered cash paid
+     */
     public void setAmountTendered(double tendered) {
         this.tendered = tendered;
     }
 
-    public void setAmountReturned(double _returned) {
+    /**
+     * Sets amount due back
+     * @param _returned amount due back
+     */
+    private void setAmountReturned(double _returned) {
         
         this.returned = _returned;
-        //if (this.returned > 0) this.valid = false;
+        
     }
 
-    public void setTotal(double total) {
+    /**
+     * Sets Total Paid
+     * @param total total amout of purchase
+     */
+    private void setTotal(double total) {
         this.total = total;
     }
 
     // Getters
+    
+    /**
+     * Getter for total paid
+     * @return total paid
+     */
     public double getTotalPaid(){
         return this.transaction.getAmountPaid();
     }
-
+    
+    /**
+     * Get total tendered
+     * @return gets total tendered
+     */
     public double getAmountTendered() {
         return this.tendered;
     }
 
+    /**
+     * Gets amount returned
+     * @return amount returend
+     */
     public double getAmountReturned() {
 
         return this.returned;
     }
 
+    /**
+     * Getter for date
+     * @return timestamp of when purchased
+     */
     public Date getInvoiceDate() {
         return new Date();
     }
 
+    /**
+     * Getter for total amount
+     * @return total amount of purchase
+     */
     public double getTotal() {
         // compute total amount including taxes
         return this.transaction.getTotal();
     }
 
-    // prints a single invoice into the salesLog db
+    /**
+     * Outputs invoice to command line
+     */
     public void printInvoice() {
         System.out.println(this.toString());
 
     }
     
+    /**
+     * Checks if this invoice is valid
+     * @return is invoice valid?
+     */
     public boolean isValid(){
         return this.valid;
     }
     
+    /**
+     * Sets status of invoice
+     * @param _valid invoice status
+     */
     public void setValid(boolean _valid){
         this.valid = _valid;
     }
@@ -109,7 +150,7 @@ public class Invoice {
     /**
      * Saves a single invoice in the salesLog
      *
-     * @param salesLogFile
+     * 
      */
     public void saveInSalesLog() {
         try {
@@ -128,6 +169,7 @@ public class Invoice {
      *
      * @param salesLogFile
      */
+    /*
     public void readAllInvoices(String salesLogFile) {
         try {
             FileInputStream fis = new FileInputStream(salesLogFile);
@@ -142,6 +184,7 @@ public class Invoice {
             System.out.println("Error: " + err.getMessage());
         }
     }
+    */
 
     /**
      *

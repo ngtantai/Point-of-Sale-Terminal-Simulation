@@ -13,10 +13,8 @@ import Server.StoreServer;
 /**
  *
  * @author Brian Parra
- * @description: This class represents the view controller for the POST. The idea is that there can be many POST's that communicate with
+ * Description of Post This class represents the view controller for the POST. The idea is that there can be many POST's that communicate with
  * StoreServer objects.
- * 
- * 
  */
 public final class Post{
     private StoreServer parentStore;
@@ -25,19 +23,23 @@ public final class Post{
     private Invoice invoice;
     
 
+    /**
+     * Initializes a post object. In reality this should be its own program and it tries to connect to StoreServer
+     * @param _parentStore Reference to the storeServer it is connected to
+     */
     public Post(StoreServer _parentStore) {
         //Reference to the store it belongs
         this.parentStore = _parentStore;
         this.transactionManager = new TransactionManager(this);
         this.catalog = this.parentStore.getCatalog();
         System.out.println("Initializing Post");
-        
-        
-        
-        
  
     }
     
+    /**
+     * This is the run method for the "view controller" This would be the equivalent of the event listener. Since there 
+     * is no event listener, it will just load a TransactionManager and read off a list of transactions.
+     */
     public void runPost(){
         System.out.println("***Post Running***\n\n\n");
         
@@ -55,6 +57,11 @@ public final class Post{
 
     }
     
+    /**
+     * This will return a Product fron the catalog by upc number
+     * @param _upc the upc to look product up by
+     * @return the product by upc
+     */
     public Product generateProductByUPC(String _upc){
         return new Product(this.catalog.getProduct(_upc));
     }

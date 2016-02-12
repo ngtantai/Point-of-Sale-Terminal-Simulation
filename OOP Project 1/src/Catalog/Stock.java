@@ -41,9 +41,9 @@ public class Stock implements IStock {
         this.catalog = new File(catalogDatabasePath);
     }
     /**
-     * Contructor
+     * Constructor
      * @param storeName name of the store
-     * @param catalogFileName  catalog file
+     * @param catalogDatabasePath  catalog file
      */
     public Stock(String storeName, String catalogDatabasePath) {
         this.store = storeName;

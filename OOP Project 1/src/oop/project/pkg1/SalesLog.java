@@ -10,7 +10,8 @@ import oop.project.pkg1.transaction.Transaction;
 
 /**
  *
- * @author Jose Ortiz Costa Description: This class contains two static methods
+ * @author Jose Ortiz Costa 
+ * @Description: This class contains two static methods
  * one of them writes a invoice to a salesLog database, and the other one prints
  * all the invoices from the salesLog database.
  * @see Invoice class

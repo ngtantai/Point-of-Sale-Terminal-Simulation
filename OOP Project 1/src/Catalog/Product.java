@@ -2,27 +2,28 @@ package Catalog;
 
 import java.text.DecimalFormat;
 
-
-
 /**
  *
- * @author Jose Ortiz Costa Description: This class represents a product from a
- * catalog with its properties ( UPC, description and price ) Date: 02/09/2016
- * Date:     02/09/2016
- * Modified: 02/09/2016 
- * USAGE: Product product = new Product ("0001", "product description", 1234.89);
- *        or Product product = new Product (); and set all the properties with the
- *        setters.
+ * @author Jose Ortiz Costa
+ * @Description: This class represents a product from a catalog with its
+ * properties ( UPC, description and price ) 
+ * @Date: 02/09/2016 Date: 02/09/2016
+ * @Modified: 02/09/2016 
+ * @USAGE: Product product = new Product ("0001", "product
+ * description", 1234.89); or Product product = new Product (); and set all the
+ * properties with the setters.
  *
  */
 public class Product implements Comparable<Product> {
 
+    // private instance variables
     private String upc;
     private String desc;
     private double price;
     private int quantity;
     private DecimalFormat formatter;
     private StringBuilder productBuilder;
+    // static variables
     static final int UPC_STARS = 0;
     static final int UPC_ENDS = 4;
     static final int DESC_STARS = 9;
@@ -30,22 +31,40 @@ public class Product implements Comparable<Product> {
     static final int PRICE_STARS = 34;
     static final int PRICE_ENDS = 41;
 
+    /**
+     * Constructor
+     */
     public Product() {
 
     }
 
+    /**
+     * Constructor
+     *
+     * @param upc
+     * @param description
+     * @param price
+     */
     public Product(String upc, String description, double price) {
         this.upc = upc;
         this.desc = description;
         this.price = price;
         formatter = new DecimalFormat("#0000.00");
     }
-    
+
+    /**
+     * Constructor
+     *
+     * @param upc
+     * @param quantity
+     */
     public Product(String upc, int quantity) {
         this.upc = upc;
         this.quantity = quantity;
         formatter = new DecimalFormat("#0000.00");
     }
+
+    //setters
     public void setUPC(String upc) {
         this.upc = upc;
     }
@@ -57,10 +76,11 @@ public class Product implements Comparable<Product> {
     public void setPrice(double price) {
         this.price = price;
     }
-    
+
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
     public String getUPC() {
         return this.upc;
     }
@@ -72,9 +92,8 @@ public class Product implements Comparable<Product> {
     public double getPrice() {
         return this.price;
     }
-    
-    public int getQuantity ()
-    {
+
+    public int getQuantity() {
         return this.quantity;
     }
 
@@ -89,6 +108,11 @@ public class Product implements Comparable<Product> {
         }
     }
 
+    /**
+     * Gets the productbuilder ready to format a product
+     *
+     * @return a StringBuilder object representing the product builder
+     */
     public StringBuilder getProductBuilder() {
         this.initProductBuilder();
         return this.productBuilder;
@@ -112,7 +136,7 @@ public class Product implements Comparable<Product> {
      * @param product Product Object
      */
     public void stringBuilderProduct(boolean outputMode) {
-        
+
         if (!outputMode) {
             stringBuilderAttribute(this.getUPC(), Product.UPC_STARS, Product.UPC_ENDS);
             stringBuilderAttribute(this.getDescription(), Product.DESC_STARS, Product.DESC_ENDS);
@@ -131,8 +155,10 @@ public class Product implements Comparable<Product> {
         }
 
     }
+
     /**
-     * Compares to Products by description 
+     * Compares to Products by description
+     *
      * @param compareProduct Product object to be compared
      * @return the object which lexically is smaller.
      */
@@ -142,19 +168,20 @@ public class Product implements Comparable<Product> {
     }
 
     /**
-     * Create a string representing the product formatted 
-     * @param outputMode if true, then its returns the product 
-     *                   formatted in the following order: Description, 
-     *                   Price and UPC. Otherwise, returns the product formatted
-     *                   in the following order: UPC, Description, price.
-     * @return a string representing the product formatted.
+     *
+     * @return a String representing a product string ready to be outputted from
+     * the transaction file
      */
     public String productReaderToString() {
         this.initProductBuilder();
         this.stringBuilderProduct(true);
         return productBuilder.toString();
     }
-    
+
+    /**
+     *
+     * @return a product string ready to be written in the transaction file
+     */
     public String productWritterToString() {
         this.initProductBuilder();
         this.stringBuilderProduct(false);

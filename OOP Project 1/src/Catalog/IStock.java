@@ -5,6 +5,7 @@ import java.util.ArrayList;
 /**
  *
  * @author Jose Ortiz Costa
+ * @Description: Interface for Catalogs classes.
  * 
  */
 public interface IStock {

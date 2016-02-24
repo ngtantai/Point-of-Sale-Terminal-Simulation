@@ -5,7 +5,7 @@ import java.rmi.registry.Registry;
 
 /**
  *
- * @author josesfval
+ * @author Jose Ortiz Costa
  */
 public class Client
 {

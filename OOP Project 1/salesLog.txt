@@ -304,3 +304,139 @@ Paid by CHECK                                       $ 1417.98
 *****INVALID TRANSACTION*****
 
 
+Walmart              Fri Feb 12 19:10:22 PST 2016
+Customer1                           
+iPad Pro 64Gb        1 @ 900.5                      $  900.50
+charger iPad         2 @ 50.3                       $  100.60
+iPhone 5             1 @ 500.5                      $  500.50
+-----------------------------------------------------------
+Total                                               $ 1501.60
+Amount Tendered                                     $ 1502.60
+Amount returned                                     $    1.00
+
+
+Walmart              Fri Feb 12 19:10:22 PST 2016
+Customer2                           
+charger iPad         90 @ 50.3                      $ 4527.00
+iPhone 5             1 @ 500.5                      $  500.50
+-----------------------------------------------------------
+Total                                               $ 5027.50
+Paid by CREDIT                                      $ 5027.50
+Amount returned                                     $    0.00
+
+
+Walmart              Fri Feb 12 19:10:22 PST 2016
+Customer3                           
+iPad Pro 64Gb        1 @ 900.5                      $  900.50
+charger iPad         2 @ 50.3                       $  100.60
+pen iPad             3 @ 99.3                       $  297.90
+macBox Pro           1 @ 2018.99                    $ 2018.99
+logitech keyboard    1 @ 99.99                      $   99.99
+-----------------------------------------------------------
+Total                                               $ 3417.98
+Paid by CHECK                                       $ 1417.98
+*****INVALID TRANSACTION*****
+
+
+Walmart              Tue Feb 23 20:32:17 PST 2016
+Customer1                           
+iPad Pro 64Gb        1 @ 900.5                      $  900.50
+charger iPad         2 @ 50.3                       $  100.60
+iPhone 5             1 @ 500.5                      $  500.50
+-----------------------------------------------------------
+Total                                               $ 1501.60
+Amount Tendered                                     $ 1502.60
+Amount returned                                     $    1.00
+
+
+Walmart              Tue Feb 23 20:32:17 PST 2016
+Customer2                           
+charger iPad         90 @ 50.3                      $ 4527.00
+iPhone 5             1 @ 500.5                      $  500.50
+-----------------------------------------------------------
+Total                                               $ 5027.50
+Paid by CREDIT                                      $ 5027.50
+Amount returned                                     $    0.00
+
+
+Walmart              Tue Feb 23 20:32:17 PST 2016
+Customer3                           
+iPad Pro 64Gb        1 @ 900.5                      $  900.50
+charger iPad         2 @ 50.3                       $  100.60
+pen iPad             3 @ 99.3                       $  297.90
+macBox Pro           1 @ 2018.99                    $ 2018.99
+logitech keyboard    1 @ 99.99                      $   99.99
+-----------------------------------------------------------
+Total                                               $ 3417.98
+Paid by CHECK                                       $ 1417.98
+*****INVALID TRANSACTION*****
+
+
+Walmart              Tue Feb 23 20:32:27 PST 2016
+Customer1                           
+iPad Pro 64Gb        1 @ 900.5                      $  900.50
+charger iPad         2 @ 50.3                       $  100.60
+iPhone 5             1 @ 500.5                      $  500.50
+-----------------------------------------------------------
+Total                                               $ 1501.60
+Amount Tendered                                     $ 1502.60
+Amount returned                                     $    1.00
+
+
+Walmart              Tue Feb 23 20:32:27 PST 2016
+Customer2                           
+charger iPad         90 @ 50.3                      $ 4527.00
+iPhone 5             1 @ 500.5                      $  500.50
+-----------------------------------------------------------
+Total                                               $ 5027.50
+Paid by CREDIT                                      $ 5027.50
+Amount returned                                     $    0.00
+
+
+Walmart              Tue Feb 23 20:32:27 PST 2016
+Customer3                           
+iPad Pro 64Gb        1 @ 900.5                      $  900.50
+charger iPad         2 @ 50.3                       $  100.60
+pen iPad             3 @ 99.3                       $  297.90
+macBox Pro           1 @ 2018.99                    $ 2018.99
+logitech keyboard    1 @ 99.99                      $   99.99
+-----------------------------------------------------------
+Total                                               $ 3417.98
+Paid by CHECK                                       $ 1417.98
+*****INVALID TRANSACTION*****
+
+
+Walmart              Tue Feb 23 21:17:15 PST 2016
+Customer1                           
+iPad Pro 64Gb        1 @ 900.5                      $  900.50
+charger iPad         2 @ 50.3                       $  100.60
+iPhone 5             1 @ 500.5                      $  500.50
+-----------------------------------------------------------
+Total                                               $ 1501.60
+Amount Tendered                                     $ 1502.60
+Amount returned                                     $    1.00
+
+
+Walmart              Tue Feb 23 21:17:15 PST 2016
+Customer2                           
+charger iPad         90 @ 50.3                      $ 4527.00
+iPhone 5             1 @ 500.5                      $  500.50
+-----------------------------------------------------------
+Total                                               $ 5027.50
+Paid by CREDIT                                      $ 5027.50
+Amount returned                                     $    0.00
+
+
+Walmart              Tue Feb 23 21:17:15 PST 2016
+Customer3                           
+iPad Pro 64Gb        1 @ 900.5                      $  900.50
+charger iPad         2 @ 50.3                       $  100.60
+pen iPad             3 @ 99.3                       $  297.90
+macBox Pro           1 @ 2018.99                    $ 2018.99
+logitech keyboard    1 @ 99.99                      $   99.99
+-----------------------------------------------------------
+Total                                               $ 3417.98
+Paid by CHECK                                       $ 1417.98
+*****INVALID TRANSACTION*****
+
+

@@ -11,6 +11,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import Catalog.*; // Imports catalog package
 import PaymentVerifier.*;
+import RMI.ServerInterface;
+
+import java.rmi.*;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
 
 
 /**
@@ -21,7 +27,7 @@ import PaymentVerifier.*;
  * 
  * 
  */
-public class StoreServer {
+public class StoreServer extends UnicastRemoteObject implements ServerInterface{
 
     private PaymentVerifier paymentVerifier;
     public String storeName;
@@ -34,8 +40,8 @@ public class StoreServer {
      * Initializes a StoreServer. This would be the part of the program that sits on the store's servers and listens for POSTs's requests.
      * @param name the name of the store
      */
-    public StoreServer(String name) {
-
+    public StoreServer(String name) throws RemoteException{
+        super();
         //Initialize stuff here needs to read in data and what not
         this.storeName = name;
 
@@ -46,35 +52,34 @@ public class StoreServer {
         paymentVerifier = new PaymentVerifier();
 
         //For now directly make a post and run it
-        currentPost = new Post(this);
-        currentPost.runPost();
+        //currentPost = new Post(this);
+        //currentPost.runPost();
 
     }
 
  
-    /**
-     * This returns the store's catalog. Can be used to populate a gui
-     * @return ArrayList of Products in the store's catalog
-     */
-    public Stock getCatalog(){
-        return this.catalog;
+    
+    @Override 
+    public Stock getCatalog() throws RemoteException{
+        
+      
+            return this.catalog;
+        
     }
+    
+  
 
 
-    /**
-     * Simply outputs catalog
-     */
-    public void viewCatalog() {
-        catalog.viewCatalog();
-
-    }
+   
     
     /**
      * This takes a transaction, verifies it, then makes an invoice and logs it before sending it back to the client POST
      * @param transaction transaction to verify
      * @return Invoice with all calculated values and status
+     * @throws java.rmi.RemoteException
      */
-    public Invoice verifyTransaction(Transaction transaction){
+    @Override 
+    public Invoice verifyTransaction(Transaction transaction) throws RemoteException{
         Invoice invoice = new Invoice(transaction , this);
         
         //Do some basic checking like random chance that check/credit card is bad or fake bills
@@ -92,6 +97,26 @@ public class StoreServer {
      */
     public String getName(){
         return this.storeName;
+    }
+    
+
+    
+    public static void main(String args[]) {
+        /*
+	     * The main method register the server
+	     * and start running the server
+         */
+        try {
+            StoreServer storeServer = new StoreServer("Walmart");
+            //g.addServerSecurity();
+            Registry reg = LocateRegistry.createRegistry(19667);
+            reg.rebind("Store", storeServer);
+            //g.registerServer();
+            System.out.println("Server has been registered Succesfully now run the client");
+        } catch (RemoteException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
 }

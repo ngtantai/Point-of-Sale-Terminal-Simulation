@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.io.*;
 import java.util.Collections;
 
-public class Stock implements IStock {
+public class Stock implements IStock , Serializable{
 
     private ArrayList<Product> products; // list of products
     private File catalog;

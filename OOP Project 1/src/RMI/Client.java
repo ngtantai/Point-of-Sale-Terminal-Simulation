@@ -1,4 +1,5 @@
 package RMI;
+import Catalog.Stock;
 import java.rmi.*;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -27,8 +28,14 @@ public class Client
            myReg = LocateRegistry.getRegistry("127.0.0.1",19667 );
            si = (ServerInterface) myReg.lookup("Store");
            System.out.println("Client succesfully working and connected to the server");
-           double test = si.add(4.00, 5.00);
-           System.out.println("Method add from server result: " + test);
+           //double test = si.add(4.00, 5.00);
+           
+           try{
+               Stock testCatalog = si.getCatalog();
+           }catch(RemoteException e){
+               System.out.println("Couldn't get catalog :( " + e.getMessage());
+           }
+           //System.out.println("Method add from server result: " + test);
             
         } 
     	catch (RemoteException e) 

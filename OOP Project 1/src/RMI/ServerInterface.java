@@ -1,6 +1,9 @@
 
 package RMI;
 import java.rmi.*;
+import Catalog.*;
+import Transactions.Invoice;
+import Transactions.Transaction;
 
 /**
  *
@@ -8,7 +11,11 @@ import java.rmi.*;
  */
 public interface ServerInterface extends Remote
 {
-    double add (double a, double b) throws RemoteException;
+
+    
+    Stock getCatalog() throws RemoteException;
+    
+    Invoice verifyTransaction(Transaction transaction) throws RemoteException;
     
             
 }

@@ -1,5 +1,6 @@
 package Catalog;
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
 
 /**
@@ -9,7 +10,7 @@ import java.text.DecimalFormat;
  * properties ( UPC, description and price )
  *
  */
-public class Product implements Comparable<Product> {
+public class Product implements Comparable<Product> , Serializable{
 
     // private instance variables
     private String upc;

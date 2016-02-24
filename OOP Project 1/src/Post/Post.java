@@ -31,7 +31,7 @@ public final class Post{
         //Reference to the store it belongs
         this.parentStore = _parentStore;
         this.transactionManager = new TransactionManager(this);
-        this.catalog = this.parentStore.getCatalog();
+        //this.catalog = this.parentStore.getCatalog();
         System.out.println("Initializing Post");
  
     }
@@ -51,8 +51,8 @@ public final class Post{
         for (Transaction transaction : transactions) {
             
             //Check for transaction
-            invoice = this.parentStore.verifyTransaction(transaction);
-            invoice.printInvoice();
+            //invoice = this.parentStore.verifyTransaction(transaction);
+            //invoice.printInvoice();
         }
 
     }

@@ -3,12 +3,13 @@ package Transactions;
 import java.util.ArrayList;
 import java.util.Iterator;
 import Catalog.Product;
+import java.io.Serializable;
 
 /**
  *
  * @author Tai and Brian
  */
-public class Customer {
+public class Customer implements Serializable{
 
     private ArrayList<Product> itemList = new ArrayList<>(); // items recorded from transaction.txt file
     private Payment payment; // customer can make payment

@@ -1,5 +1,7 @@
 package RMI;
-import Catalog.Stock;
+import Catalog.*;
+import Transactions.*;
+import java.io.Serializable;
 import java.rmi.*;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -8,7 +10,7 @@ import java.rmi.registry.Registry;
  *
  * @author Jose Ortiz Costa
  */
-public class Client
+public class Client implements Serializable
 {
     public Client ()
     {
@@ -32,10 +34,16 @@ public class Client
            
            try{
                Stock testCatalog = si.getCatalog();
+               System.out.println(testCatalog.toString());
            }catch(RemoteException e){
                System.out.println("Couldn't get catalog :( " + e.getMessage());
            }
-           //System.out.println("Method add from server result: " + test);
+           
+           try{
+               boolean isValid = si.verifyTransaction(new Transaction());
+           }catch(RemoteException e){
+               System.out.println("Couldn't verify transaction :( " + e.getMessage());
+           }
             
         } 
     	catch (RemoteException e) 

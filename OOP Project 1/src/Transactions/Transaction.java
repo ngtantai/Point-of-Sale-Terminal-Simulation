@@ -2,6 +2,7 @@ package Transactions;
 
 import Catalog.Product;
 import Catalog.Stock;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -13,7 +14,7 @@ import java.util.ArrayList;
  * 
  * @author Brian Parra
  */
-public class Transaction {
+public class Transaction implements Serializable{
     public Customer customer;
     public Payment payment;
     public LocalDateTime timeStamp;
@@ -21,6 +22,13 @@ public class Transaction {
     public double amountPaid = 0.0;
     public ArrayList<Product> products;
     public boolean valid = true;
+    
+    /**
+     * Blank transaction for testing. Don't use this
+     */
+    public Transaction(){
+        
+    }
     
     /**
      * Transaction Class holds details about a single Transaction

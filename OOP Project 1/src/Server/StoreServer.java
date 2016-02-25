@@ -79,16 +79,20 @@ public class StoreServer extends UnicastRemoteObject implements ServerInterface{
      * @throws java.rmi.RemoteException
      */
     @Override 
-    public Invoice verifyTransaction(Transaction transaction) throws RemoteException{
-        Invoice invoice = new Invoice(transaction , this);
+    public boolean verifyTransaction(Transaction transaction) throws RemoteException{
+        boolean isValid;
         
+        Invoice invoice = new Invoice(transaction , this);
+       
         //Do some basic checking like random chance that check/credit card is bad or fake bills
         if(!paymentVerifier.verify(invoice)){
            
             invoice.setValid(false);
+            return false;
         }
-        invoice.saveInSalesLog();
-        return invoice;
+        //invoice.saveInSalesLog();
+        
+        return true;
     }
     
     /**

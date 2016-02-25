@@ -11,6 +11,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import Server.StoreServer;
+import java.io.Serializable;
 
 /**
  *
@@ -21,7 +22,7 @@ import Server.StoreServer;
  * @see Transaction class
  * @see Payment class
  */
-public class Invoice {
+public class Invoice implements Serializable{
     private StoreServer store;
     private Transaction transaction;
     private double subtotal;

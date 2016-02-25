@@ -1,13 +1,14 @@
 package Transactions;
 
 import Catalog.Product;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Abstract class to standardize all payment types
  *
  */
-public class Payment {
+public class Payment implements Serializable{
 
     public static final int CASH = 0;
     public static final int CHECK = 1;

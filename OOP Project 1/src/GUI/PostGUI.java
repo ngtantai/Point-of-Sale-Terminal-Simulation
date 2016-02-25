@@ -1,5 +1,6 @@
 package GUI;
 
+
 /**
  *
  * @author Jose Ortiz
@@ -16,9 +17,9 @@ public class PostGUI extends javax.swing.JFrame {
     /**
      * Creates new form PostGUI
      */
-    public PostGUI() {
-       initComponents();
+    public PostGUI() {       
        initPanels();
+       initComponents();
     }
     
     // Init all the panels 
@@ -26,14 +27,18 @@ public class PostGUI extends javax.swing.JFrame {
     {
          // IMPORTANT NOTE:  you'll still need to create the layouts here to 
          // arrange these panels in the way you need
-         customerInfoPanel = new CustomerInfoPanel();
+         customerInfoPanel  = new CustomerInfoPanel();
          inventoryPanel = new InventoryPanel();
          paymentPanel = new PaymentPanel();
          cartPanel = new CartPanel();
          this.add(customerInfoPanel);
+         this.pack();
          this.add(inventoryPanel);
-         this.add(paymentPanel);
+         this.pack();
          this.add(cartPanel);
+         this.pack();
+         this.add(paymentPanel);
+         this.pack();
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -50,11 +55,11 @@ public class PostGUI extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 715, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 670, Short.MAX_VALUE)
         );
 
         pack();

@@ -5,6 +5,7 @@ import Transactions.Invoice;
 import Transactions.Payment;
 import Transactions.Transaction;
 import javax.swing.ButtonGroup;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -43,7 +44,22 @@ public class PaymentPanel extends javax.swing.JPanel {
      * StoreServer.</p>
      */
     private void paymentExecute(){
-        Invoice invoice = new Invoice(masterPost.remoteVerifyTransaction(), masterPost.getStoreName());
+        
+        try{
+            Integer.parseInt(creditCardNumber.getText());
+            Invoice invoice = new Invoice(masterPost.remoteVerifyTransaction(), masterPost.getStoreName());
+            System.out.println("payment went through");
+            
+        } catch (NumberFormatException e) {
+
+            JOptionPane.showMessageDialog(null,
+                    "Invalid Credit Card Number",
+                    "Payment Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+        
+        
+        
         //TODO: Get the CartPanel product list.
         //TODO: Get the Customer instance from CustomerInfoPanel.
         
@@ -58,7 +74,7 @@ public class PaymentPanel extends javax.swing.JPanel {
         
         //TODO: comment out this line below later.
         //popup.display(invoice.toString());
-        System.out.println("payment went through");
+        
     }
     
     /**

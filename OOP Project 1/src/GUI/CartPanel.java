@@ -31,8 +31,8 @@ public class CartPanel extends javax.swing.JPanel {
         inventoryPanel = new InventoryPanel(masterPost);
         initComponents();
         cartModel = new DefaultListModel();
-        jList1.setModel(cartModel);
-        jList1.setFont(new Font("monospaced", Font.PLAIN, 10));
+        cartList.setModel(cartModel);
+        cartList.setFont(new Font("monospaced", Font.PLAIN, 10));
         cartProducts = new ArrayList <>();
         totalField.setText(df.format(0));
     }
@@ -60,7 +60,7 @@ public class CartPanel extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
+        cartList = new javax.swing.JList();
         itemLabel = new javax.swing.JLabel();
         quantityLabel = new javax.swing.JLabel();
         priceLabel = new javax.swing.JLabel();
@@ -85,12 +85,12 @@ public class CartPanel extends javax.swing.JPanel {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "CART", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Sylfaen", 1, 18))); // NOI18N
 
-        jList1.setModel(new javax.swing.AbstractListModel() {
+        cartList.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setViewportView(cartList);
 
         itemLabel.setText("Item");
 
@@ -235,9 +235,9 @@ public class CartPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addProductButton;
+    private javax.swing.JList cartList;
     private javax.swing.JLabel exPriceLabel;
     private javax.swing.JLabel itemLabel;
-    private javax.swing.JList jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

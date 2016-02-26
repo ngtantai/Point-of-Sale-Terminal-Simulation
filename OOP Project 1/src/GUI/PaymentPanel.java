@@ -4,6 +4,7 @@ package GUI;
 import Transactions.Invoice;
 import Transactions.Payment;
 import Transactions.Transaction;
+import java.awt.Font;
 import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
 
@@ -21,7 +22,7 @@ public class PaymentPanel extends javax.swing.JPanel {
     public PaymentPanel(PostGUI _masterPost) {
 
         masterPost = _masterPost;
-        popup = new InvoicePopUp();
+        //popup = new InvoicePopUp();
         initComponents();
     }
     
@@ -50,7 +51,8 @@ public class PaymentPanel extends javax.swing.JPanel {
       
         if(transaction != null){
             Invoice invoice = new Invoice(transaction, masterPost.getStoreName());
-            popup.display(invoice.toString());
+            //popup.display(invoice.toString());
+            new InvoicePopUp(invoice.toString());
         }
         
         
@@ -86,17 +88,18 @@ public class PaymentPanel extends javax.swing.JPanel {
         
         private InvoicePopUpPanel invoicePopUpPanel;
                 
-        private InvoicePopUp(){
-            invoicePopUpPanel = new InvoicePopUpPanel();
+        private InvoicePopUp(String text){
+            invoicePopUpPanel = new InvoicePopUpPanel(text);
             
             this.setTitle("Invoice");
             this.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
             this.setResizable(true);
             this.setLocationRelativeTo(null);
-            this.setMinimumSize(new java.awt.Dimension(300, 480));
+            //this.setMinimumSize(new java.awt.Dimension(300, 480));
             this.setFocusable(false);
             this.setContentPane(invoicePopUpPanel);
             this.pack();
+            this.setVisible(true);
         }
         
         /**
@@ -113,19 +116,31 @@ public class PaymentPanel extends javax.swing.JPanel {
          * It holds the text area of which the invoice/receipt is displayed.</p>
          */
         private class InvoicePopUpPanel extends javax.swing.JPanel{
-            
+         
             private javax.swing.JTextArea invoiceTextArea;
             
-            private InvoicePopUpPanel(){
-                invoiceTextArea = new javax.swing.JTextArea();
+            private InvoicePopUpPanel(String text){
+                invoiceTextArea = new javax.swing.JTextArea(countLines(text), 50);
+                invoiceTextArea.setText(text);
+                
 		invoiceTextArea.setEditable(false);
+                invoiceTextArea.setFont(new Font("monospaced", Font.PLAIN, 12));
 		
 		this.setLayout(new java.awt.BorderLayout());
-		this.add(invoiceTextArea, java.awt.BorderLayout.CENTER);
+                this.add(invoiceTextArea, java.awt.BorderLayout.CENTER);
+                
+                this.setVisible(true);
             }
             
             private void setTextArea(String text){
+                
                 invoiceTextArea.setText(text);
+                
+            }
+            
+            private int countLines(String str) {
+                String[] lines = str.split("\r\n|\r|\n");
+                return lines.length;
             }
         }
     }

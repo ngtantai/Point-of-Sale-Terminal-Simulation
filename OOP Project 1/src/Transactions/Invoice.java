@@ -238,7 +238,7 @@ public class Invoice implements Serializable{
                 + "*****INVALID TRANSACTION*****\n";
         }
         
-        return invoicePart1 + invoicePart2 + separator + invoicePart3 + "\n\n";
+        return invoicePart1 + invoicePart2 + separator + invoicePart3;
 
     }
 

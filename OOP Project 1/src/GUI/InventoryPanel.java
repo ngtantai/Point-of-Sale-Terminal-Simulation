@@ -84,6 +84,8 @@ public class InventoryPanel extends javax.swing.JPanel {
         itemNameLabel = new javax.swing.JLabel();
         unitPriceLabel = new javax.swing.JLabel();
         UpcLabel = new javax.swing.JLabel();
+        addToCartBtn = new javax.swing.JButton();
+        quantitySelector = new javax.swing.JComboBox<>();
 
         setBackground(new java.awt.Color(212, 212, 212));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
@@ -104,6 +106,21 @@ public class InventoryPanel extends javax.swing.JPanel {
 
         UpcLabel.setText("Unit_Price");
 
+        addToCartBtn.setText("Add To Cart");
+        addToCartBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addToCartBtnActionPerformed(evt);
+                addToCartButtonHandler(evt);
+            }
+        });
+
+        quantitySelector.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
+        quantitySelector.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                quantitySelectorActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -117,6 +134,11 @@ public class InventoryPanel extends javax.swing.JPanel {
                 .addComponent(itemNameLabel)
                 .addContainerGap(89, Short.MAX_VALUE))
             .addComponent(inventoryListScrollPane)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(addToCartBtn)
+                .addGap(36, 36, 36)
+                .addComponent(quantitySelector, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -126,8 +148,12 @@ public class InventoryPanel extends javax.swing.JPanel {
                     .addComponent(unitPriceLabel)
                     .addComponent(UpcLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(inventoryListScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26))
+                .addComponent(inventoryListScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addToCartBtn)
+                    .addComponent(quantitySelector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -144,13 +170,29 @@ public class InventoryPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void addToCartBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToCartBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addToCartBtnActionPerformed
+
+    private void addToCartButtonHandler(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToCartButtonHandler
+        String quantity = (String) quantitySelector.getSelectedItem();
+        Integer productQuantity = Integer.valueOf(quantity);
+        masterPost.handleAddProduct(productSelected, productQuantity );
+    }//GEN-LAST:event_addToCartButtonHandler
+
+    private void quantitySelectorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quantitySelectorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_quantitySelectorActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel UpcLabel;
+    private javax.swing.JButton addToCartBtn;
     private javax.swing.JList inventoryList;
     private javax.swing.JScrollPane inventoryListScrollPane;
     private javax.swing.JLabel itemNameLabel;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JComboBox<String> quantitySelector;
     private javax.swing.JLabel unitPriceLabel;
     // End of variables declaration//GEN-END:variables
 }

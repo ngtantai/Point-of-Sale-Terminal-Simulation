@@ -181,6 +181,10 @@ public class PostGUI extends javax.swing.JFrame {
         return this.storeName;
         
     }
+    
+    public void handleAddProduct(int productIndex, int quantity){
+        cartPanel.addProduct(productIndex, quantity);
+    }
 
     public void handleDoubleClickedProduct(){
         cartPanel.addDoubleClickedProduct();

@@ -203,10 +203,6 @@ public class CartPanel extends javax.swing.JPanel {
         Stock catalog = this.masterPost.getLocalCatalog();
         Product product = catalog.getProduct(InventoryPanel.productSelected);
         //check if exists
-        Product existingProduct = isInCart(product);
-        if(existingProduct != null){
-            System.out.println(existingProduct.getQuantity());
-        }
         
         product.setQuantity(1);
         double ex_price = product.getPrice();
@@ -240,6 +236,24 @@ public class CartPanel extends javax.swing.JPanel {
 
     }
     
+    public void addProduct(int productIndex, int quantity){
+        Stock catalog = this.masterPost.getLocalCatalog();
+        Product product = catalog.getProduct(InventoryPanel.productSelected);
+        product.setQuantity(quantity);
+        double ex_price = product.getQuantity() * product.getPrice();
+        
+        total += ex_price;
+        String productToString = String.format("%s %5s %10s %10s", 
+                                               product.getDescription(),
+                                               product.getQuantity(),
+                                               product.getPrice(),
+                                               ex_price);
+        
+        cartModel.addElement(productToString);
+        totalField.setText(df.format(total));
+        cartProducts.add(product);
+    }
+    
     private void addProductButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButtonMouseClicked
         Stock catalog = this.masterPost.getLocalCatalog();
         Product product = catalog.getProduct(InventoryPanel.productSelected);
@@ -258,9 +272,6 @@ public class CartPanel extends javax.swing.JPanel {
         cartModel.addElement(productToString);
         totalField.setText(df.format(total));
         cartProducts.add(product);
-        
-        
-        
         
 
     }//GEN-LAST:event_addProductButtonMouseClicked

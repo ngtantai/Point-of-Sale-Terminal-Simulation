@@ -2,7 +2,6 @@ package Server;
 
 import Transactions.Transaction;
 import Transactions.Invoice;
-import Post.*;
 import java.io.File;
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -11,7 +10,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import Catalog.*; // Imports catalog package
 import PaymentVerifier.*;
-import RMI.ServerInterface;
 
 import java.rmi.*;
 import java.rmi.registry.LocateRegistry;
@@ -31,7 +29,6 @@ public class StoreServer extends UnicastRemoteObject implements ServerInterface{
     
     private PaymentVerifier paymentVerifier;
     public String storeName;
-    public Post currentPost;
     private final String CATALOG_DATABASE = "products.txt";
     private Stock catalog; // catalog instance
 

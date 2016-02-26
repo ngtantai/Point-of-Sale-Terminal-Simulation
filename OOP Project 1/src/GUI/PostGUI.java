@@ -2,8 +2,7 @@ package GUI;
 
 import Catalog.Product;
 import Catalog.Stock;
-import RMI.Client;
-import RMI.ServerInterface;
+import Server.ServerInterface;
 import Transactions.Customer;
 import Transactions.Invoice;
 import Transactions.Payment;

@@ -1,5 +1,5 @@
 
-package RMI;
+package Server;
 import java.rmi.*;
 import Catalog.*;
 import Transactions.*;

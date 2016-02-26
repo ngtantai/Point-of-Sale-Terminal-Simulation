@@ -3,7 +3,6 @@ package GUI;
 
 import Catalog.Product;
 import Catalog.Stock;
-import RMI.Client;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -38,15 +37,15 @@ public class InventoryPanel extends javax.swing.JPanel {
        products = catalog.getProductsFromStock();
        for (Product product : products)
            listModel.addElement(product.productReaderToString());
-       jList1.setModel(listModel);
-       jList1.addMouseListener(mouseListener);
-       jList1.setFont(new Font("monospaced", Font.PLAIN, 10));
+       inventoryList.setModel(listModel);
+       inventoryList.addMouseListener(mouseListener);
+       inventoryList.setFont(new Font("monospaced", Font.PLAIN, 10));
        
     }
     
     public JList getList ()
     {
-        return this.jList1;
+        return this.inventoryList;
     }
     MouseListener mouseListener = new MouseAdapter() {
       public void mouseClicked(MouseEvent mouseEvent) {
@@ -71,11 +70,11 @@ public class InventoryPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        inventoryListScrollPane = new javax.swing.JScrollPane();
+        inventoryList = new javax.swing.JList();
+        itemNameLabel = new javax.swing.JLabel();
+        unitPriceLabel = new javax.swing.JLabel();
+        UpcLabel = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(212, 212, 212));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
@@ -83,18 +82,18 @@ public class InventoryPanel extends javax.swing.JPanel {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "INVENTORY", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Sylfaen", 1, 18))); // NOI18N
 
-        jList1.setModel(new javax.swing.AbstractListModel() {
+        inventoryList.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane1.setViewportView(jList1);
+        inventoryListScrollPane.setViewportView(inventoryList);
 
-        jLabel1.setText("UPC");
+        itemNameLabel.setText("UPC");
 
-        jLabel2.setText("Item");
+        unitPriceLabel.setText("Item");
 
-        jLabel3.setText("Unit_Price");
+        UpcLabel.setText("Unit_Price");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -102,23 +101,23 @@ public class InventoryPanel extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel2)
+                .addComponent(unitPriceLabel)
                 .addGap(82, 82, 82)
-                .addComponent(jLabel3)
+                .addComponent(UpcLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1)
+                .addComponent(itemNameLabel)
                 .addContainerGap(89, Short.MAX_VALUE))
-            .addComponent(jScrollPane1)
+            .addComponent(inventoryListScrollPane)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
+                    .addComponent(itemNameLabel)
+                    .addComponent(unitPriceLabel)
+                    .addComponent(UpcLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(inventoryListScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26))
         );
 
@@ -138,11 +137,11 @@ public class InventoryPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JList jList1;
+    private javax.swing.JLabel UpcLabel;
+    private javax.swing.JList inventoryList;
+    private javax.swing.JScrollPane inventoryListScrollPane;
+    private javax.swing.JLabel itemNameLabel;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel unitPriceLabel;
     // End of variables declaration//GEN-END:variables
 }

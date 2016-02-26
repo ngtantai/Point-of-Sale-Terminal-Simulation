@@ -1,6 +1,13 @@
 
 package GUI;
 
+import Catalog.Product;
+import Catalog.Stock;
+import RMI.Client;
+import java.rmi.RemoteException;
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
+
 /**
  *
  * @author Jose Ortiz
@@ -9,8 +16,21 @@ public class InventoryPanel extends javax.swing.JPanel {
     /**
      *  Only contains functionality used on the Inventory Panel
      */
-    public InventoryPanel() {
+    Stock catalog;
+    ArrayList <Product> products;
+    DefaultListModel listModel;
+    public InventoryPanel() throws RemoteException {
         initComponents();
+        // initializes the client
+       Client client = new Client();
+       listModel = new DefaultListModel();
+       client.initClient();
+       catalog = client.getServerInterface().getCatalog();
+       products = catalog.getProductsFromStock();
+       for (Product product : products)
+           listModel.addElement(product.productReaderToString());
+       jList1.setModel(listModel);
+       
     }
 
     /**

@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.rmi.*;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.ArrayList;
 
 /**
  *
@@ -12,6 +13,7 @@ import java.rmi.registry.Registry;
  */
 public class Client implements Serializable
 {
+    ServerInterface si;
     public Client ()
     {
         
@@ -26,7 +28,7 @@ public class Client implements Serializable
     	{
             
            Registry myReg;
-           ServerInterface si;
+          
            myReg = LocateRegistry.getRegistry("127.0.0.1",19667 );
            si = (ServerInterface) myReg.lookup("Store");
            System.out.println("Client succesfully working and connected to the server");
@@ -62,11 +64,16 @@ public class Client implements Serializable
         }
     }
     
-    public static void main (String args [])
+    public ServerInterface getServerInterface()
     {
-        // initializes the client
-        Client client = new Client();
-    	client.initClient();
+        return si;
+    }
+    
+    public static void main (String args []) throws RemoteException
+    {
+        
+        
+        
     }
     
     

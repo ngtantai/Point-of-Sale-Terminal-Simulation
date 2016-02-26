@@ -1,5 +1,9 @@
 package GUI;
 
+import java.rmi.RemoteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 /**
  *
@@ -17,13 +21,13 @@ public class PostGUI extends javax.swing.JFrame {
     /**
      * Creates new form PostGUI
      */
-    public PostGUI() {       
+    public PostGUI() throws RemoteException {       
        initPanels();
        initComponents();
     }
     
     // Init all the panels 
-    private void initPanels()
+    private void initPanels() throws RemoteException
     {
          // IMPORTANT NOTE:  you'll still need to create the layouts here to 
          // arrange these panels in the way you need
@@ -95,7 +99,11 @@ public class PostGUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PostGUI().setVisible(true);
+                try {
+                    new PostGUI().setVisible(true);
+                } catch (RemoteException ex) {
+                    Logger.getLogger(PostGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

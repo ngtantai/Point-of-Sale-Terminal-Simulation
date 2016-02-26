@@ -67,6 +67,14 @@ public class PaymentPanel extends javax.swing.JPanel {
         return valid;
     }
     
+    public void clear(){
+        creditCardNumber.setText("");
+        creditRadioBtn.setSelected(true);
+        if(!creditCardNumber.isEnabled()){
+            creditCardNumber.setEnabled(true);
+        }
+    }
+    
     /**
      * <p>This is a nested inner class which purpose is to display the 
      * invoice/receipt in a pop up window. This first class extends JFrame, the

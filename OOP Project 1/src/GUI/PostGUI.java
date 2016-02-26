@@ -52,6 +52,13 @@ public class PostGUI extends javax.swing.JFrame {
         return localCatalog;
     }
     
+    public void clearAll(){
+        cartPanel.clear();
+        customerInfoPanel.clear();
+        paymentPanel.clear();
+    }
+    
+    
     public Transaction remoteVerifyTransaction(){
         //perform checks first
         //-cart has items
@@ -103,6 +110,7 @@ public class PostGUI extends javax.swing.JFrame {
             try {
                 
                 transaction.setValid(si.verifyTransaction(transaction));
+                clearAll();
                 wasProcessed = true;
                 
             } catch (RemoteException  e) {

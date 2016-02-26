@@ -15,22 +15,19 @@ public class CustomerInfoPanel extends javax.swing.JPanel {
     public CustomerInfoPanel(PostGUI _masterPost) {
         masterPost = _masterPost;
         initComponents();
+        storeNameLabel.setText(masterPost.getStoreName());
     }
-    public void setTotat (double total)
-    {
-       String totalTransaction =  String.valueOf(total);
-       jTextField2.setText(totalTransaction);
-       
+
+    
+    public void clear(){
+        customerName.setText("");
     }
     
     public Customer getCustomer(){
         return new Customer(customerName.getText());
     }
     
-    public double getTotal()
-    {
-        return Double.valueOf(jTextField2.getText());
-    }
+  
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -42,28 +39,19 @@ public class CustomerInfoPanel extends javax.swing.JPanel {
 
         customerNameLabel = new javax.swing.JLabel();
         customerName = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
+        storeNameLabel = new javax.swing.JLabel();
 
         customerNameLabel.setText("Customer:");
 
-        customerName.setText("Levine");
         customerName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 customerNameActionPerformed(evt);
             }
         });
 
-        jLabel2.setText("Total:");
-
-        jTextField2.setText("0.00");
-        jTextField2.setToolTipText("");
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
-            }
-        });
+        storeNameLabel.setFont(new java.awt.Font("Lucida Grande", 1, 36)); // NOI18N
+        storeNameLabel.setText("jLabel1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -74,11 +62,9 @@ public class CustomerInfoPanel extends javax.swing.JPanel {
                 .addComponent(customerNameLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(customerName, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 364, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(79, 79, 79))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 276, Short.MAX_VALUE)
+                .addComponent(storeNameLabel)
+                .addGap(215, 215, 215))
             .addComponent(jSeparator1)
         );
         layout.setVerticalGroup(
@@ -88,9 +74,8 @@ public class CustomerInfoPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(customerNameLabel)
                     .addComponent(customerName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                    .addComponent(storeNameLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(8, 8, 8))
         );
@@ -100,16 +85,11 @@ public class CustomerInfoPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_customerNameActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField customerName;
     private javax.swing.JLabel customerNameLabel;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JLabel storeNameLabel;
     // End of variables declaration//GEN-END:variables
 }

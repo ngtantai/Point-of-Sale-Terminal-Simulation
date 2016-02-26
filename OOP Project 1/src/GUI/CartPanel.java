@@ -2,6 +2,8 @@ package GUI;
 
 import Catalog.Product;
 import Catalog.Stock;
+import static GUI.InventoryPanel.productSelected;
+import Transactions.Payment;
 import java.awt.Font;
 import java.rmi.RemoteException;
 import java.text.DecimalFormat;
@@ -20,7 +22,6 @@ public class CartPanel extends javax.swing.JPanel {
     InventoryPanel inventoryPanel;
     DefaultListModel cartModel;
     ArrayList <Product> cartProducts;
-    static double total = 0;
     private final DecimalFormat df = new DecimalFormat("#.##");
 
     /**
@@ -65,10 +66,10 @@ public class CartPanel extends javax.swing.JPanel {
         quantityLabel = new javax.swing.JLabel();
         priceLabel = new javax.swing.JLabel();
         exPriceLabel = new javax.swing.JLabel();
-        addProductButton = new javax.swing.JButton();
-        quantitySelector = new javax.swing.JComboBox<>();
         totalField = new javax.swing.JTextField();
         totalLabel = new javax.swing.JLabel();
+        clearBtn = new javax.swing.JButton();
+        removeBtn = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -100,25 +101,6 @@ public class CartPanel extends javax.swing.JPanel {
 
         exPriceLabel.setText("Ex_Price");
 
-        addProductButton.setText("Add Product");
-        addProductButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                addProductButtonMouseClicked(evt);
-            }
-        });
-        addProductButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addProductButtonActionPerformed(evt);
-            }
-        });
-
-        quantitySelector.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" }));
-        quantitySelector.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                quantitySelectorActionPerformed(evt);
-            }
-        });
-
         totalField.setEditable(false);
         totalField.setToolTipText("0.00");
         totalField.addActionListener(new java.awt.event.ActionListener() {
@@ -128,6 +110,20 @@ public class CartPanel extends javax.swing.JPanel {
         });
 
         totalLabel.setText("Total:");
+
+        clearBtn.setText("Clear Cart");
+        clearBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearBtnActionPerformed(evt);
+            }
+        });
+
+        removeBtn.setText("Remove Item");
+        removeBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -149,10 +145,10 @@ public class CartPanel extends javax.swing.JPanel {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(addProductButton, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(removeBtn)
+                                .addGap(16, 16, 16)
+                                .addComponent(clearBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(quantitySelector, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
                                 .addComponent(totalLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(totalField, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -171,10 +167,10 @@ public class CartPanel extends javax.swing.JPanel {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addProductButton)
-                    .addComponent(quantitySelector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(totalField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(totalLabel))
+                    .addComponent(totalLabel)
+                    .addComponent(clearBtn)
+                    .addComponent(removeBtn))
                 .addContainerGap())
         );
 
@@ -195,10 +191,6 @@ public class CartPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void addProductButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProductButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_addProductButtonActionPerformed
-
     public void addDoubleClickedProduct(){
         Stock catalog = this.masterPost.getLocalCatalog();
         Product product = catalog.getProduct(InventoryPanel.productSelected);
@@ -207,7 +199,7 @@ public class CartPanel extends javax.swing.JPanel {
         product.setQuantity(1);
         double ex_price = product.getPrice();
         
-        total += ex_price;
+        
         String productToString = String.format("%s %5s %10s %10s", 
                                                product.getDescription(),
                                                1,
@@ -215,8 +207,9 @@ public class CartPanel extends javax.swing.JPanel {
                                                ex_price);
         
         cartModel.addElement(productToString);
-        totalField.setText(df.format(total));
         cartProducts.add(product);
+        totalField.setText(df.format(Payment.calculateTotal(cartProducts)));
+        
     }
     
     
@@ -242,7 +235,7 @@ public class CartPanel extends javax.swing.JPanel {
         product.setQuantity(quantity);
         double ex_price = product.getQuantity() * product.getPrice();
         
-        total += ex_price;
+        
         String productToString = String.format("%s %5s %10s %10s", 
                                                product.getDescription(),
                                                product.getQuantity(),
@@ -250,44 +243,35 @@ public class CartPanel extends javax.swing.JPanel {
                                                ex_price);
         
         cartModel.addElement(productToString);
-        totalField.setText(df.format(total));
+        
         cartProducts.add(product);
+        totalField.setText(df.format(Payment.calculateTotal(cartProducts)));
     }
-    
-    private void addProductButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButtonMouseClicked
-        Stock catalog = this.masterPost.getLocalCatalog();
-        Product product = catalog.getProduct(InventoryPanel.productSelected);
-        String quantity = (String) quantitySelector.getSelectedItem();
-        Integer productQuantity = Integer.valueOf(quantity);
-        product.setQuantity(productQuantity);
-        double ex_price = product.getQuantity() * product.getPrice();
         
-        total += ex_price;
-        String productToString = String.format("%s %5s %10s %10s", 
-                                               product.getDescription(),
-                                               product.getQuantity(),
-                                               product.getPrice(),
-                                               ex_price);
-        
-        cartModel.addElement(productToString);
-        totalField.setText(df.format(total));
-        cartProducts.add(product);
-        
-
-    }//GEN-LAST:event_addProductButtonMouseClicked
-    
-    private void quantitySelectorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quantitySelectorActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_quantitySelectorActionPerformed
-
     private void totalFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_totalFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_totalFieldActionPerformed
 
+    private void clearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBtnActionPerformed
+        clear();
+    }//GEN-LAST:event_clearBtnActionPerformed
+
+    private void removeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeBtnActionPerformed
+        int index = cartList.getSelectedIndex();
+          if (index >= 0) {
+            //Object o = cartList.getModel().getElementAt(index);
+            //productSelected = index;
+            cartModel.remove(index);
+            cartProducts.remove(index);
+            totalField.setText(df.format(Payment.calculateTotal(cartProducts)));
+            
+          }
+    }//GEN-LAST:event_removeBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addProductButton;
     private javax.swing.JList cartList;
+    private javax.swing.JButton clearBtn;
     private javax.swing.JLabel exPriceLabel;
     private javax.swing.JLabel itemLabel;
     private javax.swing.JPanel jPanel1;
@@ -295,7 +279,7 @@ public class CartPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel priceLabel;
     private javax.swing.JLabel quantityLabel;
-    private javax.swing.JComboBox<String> quantitySelector;
+    private javax.swing.JButton removeBtn;
     private javax.swing.JTextField totalField;
     private javax.swing.JLabel totalLabel;
     // End of variables declaration//GEN-END:variables

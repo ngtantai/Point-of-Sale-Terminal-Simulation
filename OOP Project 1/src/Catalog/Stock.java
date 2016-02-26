@@ -202,5 +202,7 @@ public class Stock implements IStock , Serializable{
             System.out.println(prod.productReaderToString());
                
     }
+    
+
 
 }

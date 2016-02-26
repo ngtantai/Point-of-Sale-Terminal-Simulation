@@ -182,6 +182,9 @@ public class PostGUI extends javax.swing.JFrame {
         
     }
 
+    public void handleDoubleClickedProduct(){
+        cartPanel.addDoubleClickedProduct();
+    }
     // Init all the panels 
     private void initPanels() throws RemoteException {
         // IMPORTANT NOTE:  you'll still need to create the layouts here to 

@@ -58,6 +58,15 @@ public class InventoryPanel extends javax.swing.JPanel {
             
           }
         }
+        if(mouseEvent.getClickCount() == 2){
+           int index = theList.getSelectedIndex();
+          if (index >= 0) {
+            Object o = theList.getModel().getElementAt(index);
+            productSelected = index;
+            masterPost.handleDoubleClickedProduct();
+            
+          } 
+        }
       }
     };
     /**

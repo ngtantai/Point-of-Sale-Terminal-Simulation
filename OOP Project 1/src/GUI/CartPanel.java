@@ -199,6 +199,47 @@ public class CartPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_addProductButtonActionPerformed
 
+    public void addDoubleClickedProduct(){
+        Stock catalog = this.masterPost.getLocalCatalog();
+        Product product = catalog.getProduct(InventoryPanel.productSelected);
+        //check if exists
+        Product existingProduct = isInCart(product);
+        if(existingProduct != null){
+            System.out.println(existingProduct.getQuantity());
+        }
+        
+        product.setQuantity(1);
+        double ex_price = product.getPrice();
+        
+        total += ex_price;
+        String productToString = String.format("%s %5s %10s %10s", 
+                                               product.getDescription(),
+                                               1,
+                                               product.getPrice(),
+                                               ex_price);
+        
+        cartModel.addElement(productToString);
+        totalField.setText(df.format(total));
+        cartProducts.add(product);
+    }
+    
+    
+    public Product isInCart(Product productToLookUp) {
+
+        if (cartProducts.size() == 0) {
+            return null;
+        }
+
+        for (Product cartProduct : cartProducts) {
+            if (cartProduct.getUPC().equals(productToLookUp.getUPC())) {
+                return cartProduct;
+            }
+        }
+
+        return null;
+
+    }
+    
     private void addProductButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButtonMouseClicked
         Stock catalog = this.masterPost.getLocalCatalog();
         Product product = catalog.getProduct(InventoryPanel.productSelected);

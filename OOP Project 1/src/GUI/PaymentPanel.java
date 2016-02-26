@@ -50,6 +50,7 @@ public class PaymentPanel extends javax.swing.JPanel {
             Invoice invoice = new Invoice(masterPost.remoteVerifyTransaction(), masterPost.getStoreName());
             System.out.println("payment went through");
             
+            //popup.display(invoice.toString()); //output invoice in pop up.
         } catch (NumberFormatException e) {
 
             JOptionPane.showMessageDialog(null,
@@ -57,23 +58,6 @@ public class PaymentPanel extends javax.swing.JPanel {
                     "Payment Error",
                     JOptionPane.ERROR_MESSAGE);
         }
-        
-        
-        
-        //TODO: Get the CartPanel product list.
-        //TODO: Get the Customer instance from CustomerInfoPanel.
-        
-        //ArrayList<Product> products; //retrieved from CartPanel
-        //Customer customer;      //retrieved from CustomerInfoPanel
-        //Payment payment;        //information is here in this class.
-        
-        
-        //Transaction transaction;
-        //Invoice invoice;
-        //Server.StoreServer storeServer;    //for the purposes of testing
-        
-        //TODO: comment out this line below later.
-        //popup.display(invoice.toString());
         
     }
     
@@ -84,28 +68,28 @@ public class PaymentPanel extends javax.swing.JPanel {
      * PaymentPanel class. An instance of this class is used in the 
      * paymentExecute() method of PaymentPanel.</p>
      */
-    private class InvoicePopUp extends javax.swing.JFrame{
+    public class InvoicePopUp extends javax.swing.JFrame{
         
         private InvoicePopUpPanel invoicePopUpPanel;
                 
-        private InvoicePopUp(){
+        public InvoicePopUp(){
             invoicePopUpPanel = new InvoicePopUpPanel();
             
             this.setTitle("Invoice");
             this.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
             this.setResizable(true);
             this.setLocationRelativeTo(null);
-            this.setMinimumSize(new java.awt.Dimension(300, 480));
+            this.setMinimumSize(new java.awt.Dimension(500, 350));
             this.setFocusable(false);
             this.setContentPane(invoicePopUpPanel);
             this.pack();
         }
         
         /**
-	 * <p>Display the string that was passed in this constructor.</p>
+	 * <p>Display the string that was passed in this method.</p>
 	 * @param invoiceToPrint - string to display in the TextArea
 	 */
-	private void display(String invoiceToPrint){
+	public void display(String invoiceToPrint){
             invoicePopUpPanel.setTextArea(invoiceToPrint);
             this.setVisible(true);
 	}
@@ -115,15 +99,18 @@ public class PaymentPanel extends javax.swing.JPanel {
          * It holds the text area of which the invoice/receipt is displayed.</p>
          */
         private class InvoicePopUpPanel extends javax.swing.JPanel{
-            
+            private javax.swing.JScrollPane invoiceScrollPane;
             private javax.swing.JTextArea invoiceTextArea;
             
             private InvoicePopUpPanel(){
                 invoiceTextArea = new javax.swing.JTextArea();
+                invoiceScrollPane = new javax.swing.JScrollPane();
+                invoiceScrollPane.setViewportView(invoiceTextArea);
 		invoiceTextArea.setEditable(false);
-		
+		invoiceTextArea.setFont(new java.awt.Font("Monospaced", java.awt.Font.PLAIN, 12));
+                
 		this.setLayout(new java.awt.BorderLayout());
-		this.add(invoiceTextArea, java.awt.BorderLayout.CENTER);
+                this.add(invoiceScrollPane, java.awt.BorderLayout.CENTER);
             }
             
             private void setTextArea(String text){
@@ -132,11 +119,11 @@ public class PaymentPanel extends javax.swing.JPanel {
         }
     }
     
-    //This is for testing PaymentPanel only. Run and click the PAY button.
+    //This is for testing the InvoicePopUp only.
     /*
-    public static void main(String[] args){
+    public static void main(String[] args) throws java.rmi.RemoteException{
         javax.swing.JFrame dummyFrame = new javax.swing.JFrame();
-        PaymentPanel paymentPanel = new PaymentPanel();
+        PaymentPanel paymentPanel = new PaymentPanel(new PostGUI());
         
         dummyFrame.setTitle("PaymentPanel Tester");
         dummyFrame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
@@ -148,9 +135,21 @@ public class PaymentPanel extends javax.swing.JPanel {
         dummyFrame.setContentPane(paymentPanel);
         dummyFrame.pack();
         
+        Transactions.Customer customer = new Transactions.Customer("John Doe");
+        Transactions.Payment payment = new Transactions.Payment(Payment.CASH, 200.0);
+        java.util.ArrayList<Catalog.Product> products = new java.util.ArrayList<Catalog.Product>();
+        for(int i = 0; i < 30; i++){
+            products.add(new Catalog.Product("1111", "air", 200.0));
+        }
+        Transaction transaction = new Transaction(customer, payment, products);
+        Invoice invoiceTest = new Invoice(transaction,"WALLYMART");
+        
+        PaymentPanel.InvoicePopUp popup = paymentPanel.new InvoicePopUp();
+        
+        System.out.println(invoiceTest.toString());
+        popup.display(invoiceTest.toString());
     }
     */
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

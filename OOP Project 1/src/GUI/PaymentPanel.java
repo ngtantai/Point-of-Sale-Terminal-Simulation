@@ -45,36 +45,26 @@ public class PaymentPanel extends javax.swing.JPanel {
      */
     private void paymentExecute(){
         
-        try{
-            Integer.parseInt(creditCardNumber.getText());
-            Invoice invoice = new Invoice(masterPost.remoteVerifyTransaction(), masterPost.getStoreName());
-            System.out.println("payment went through");
-            
-        } catch (NumberFormatException e) {
-
-            JOptionPane.showMessageDialog(null,
-                    "Invalid Credit Card Number",
-                    "Payment Error",
-                    JOptionPane.ERROR_MESSAGE);
+        
+        Transaction transaction = masterPost.remoteVerifyTransaction();
+      
+        if(transaction != null){
+            Invoice invoice = new Invoice(transaction, masterPost.getStoreName());
+            popup.display(invoice.toString());
         }
         
         
-        
-        //TODO: Get the CartPanel product list.
-        //TODO: Get the Customer instance from CustomerInfoPanel.
-        
-        //ArrayList<Product> products; //retrieved from CartPanel
-        //Customer customer;      //retrieved from CustomerInfoPanel
-        //Payment payment;        //information is here in this class.
-        
-        
-        //Transaction transaction;
-        //Invoice invoice;
-        //Server.StoreServer storeServer;    //for the purposes of testing
-        
-        //TODO: comment out this line below later.
-        //popup.display(invoice.toString());
-        
+    }
+    
+    public boolean validateCreditCardNumber(){
+        boolean valid = true;
+        try{
+            Integer.parseInt(creditCardNumber.getText());            
+        } catch (NumberFormatException e) {
+
+            valid = false;
+        }
+        return valid;
     }
     
     /**

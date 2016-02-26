@@ -1,8 +1,10 @@
 package GUI;
 
+import Catalog.Product;
 import Catalog.Stock;
 import RMI.Client;
 import RMI.ServerInterface;
+import Transactions.Customer;
 import Transactions.Invoice;
 import Transactions.Payment;
 import Transactions.Transaction;
@@ -10,6 +12,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -50,14 +53,45 @@ public class PostGUI extends javax.swing.JFrame {
     }
     
     public Transaction remoteVerifyTransaction(){
+        //perform checks first
+        //-cart has items
+        //name entered
+        //credit card number enterd
+        
         boolean wasProcessed = false;
-        if(paymentPanel.getPaymentType() == Payment.CREDIT){
-            Payment payment = new Payment(paymentPanel.getPaymentType() , 34.0 , paymentPanel.getCreditCardNumber());
-        }else{
-            Payment payment = new Payment(paymentPanel.getPaymentType() , 34.0);
+        ArrayList <Product> cartProducts = cartPanel.getProductsFromCart();
+        double total = Payment.calculateTotal(cartProducts);
+        Customer customer = customerInfoPanel.getCustomer();
+        Payment payment;
+        
+        if(customer.getName().equals("")){
+            JOptionPane.showMessageDialog(null,
+                    "No Customer Name Entered",
+                    "Customer Error",
+                    JOptionPane.WARNING_MESSAGE);
+            return null;
+        }else if(cartProducts.isEmpty()){
+            JOptionPane.showMessageDialog(null,
+                    "No items in Cart.",
+                    "Cart Error",
+                    JOptionPane.WARNING_MESSAGE);
+            return null;
+        }else if(paymentPanel.getPaymentType() == Payment.CREDIT && !paymentPanel.validateCreditCardNumber()){
+            JOptionPane.showMessageDialog(null,
+                    "Invalid Credit Card Number",
+                    "Payment Error",
+                    JOptionPane.WARNING_MESSAGE);
+            return null;
         }
         
-        Transaction transaction = new Transaction();
+        
+        if(paymentPanel.getPaymentType() == Payment.CREDIT){
+            payment = new Payment(paymentPanel.getPaymentType() , total , paymentPanel.getCreditCardNumber());
+        }else{
+            payment = new Payment(paymentPanel.getPaymentType() , total);
+        }
+        
+        Transaction transaction = new Transaction(customer, payment,  cartProducts);
         int choice;
         Object[] options = {
             "Retry",

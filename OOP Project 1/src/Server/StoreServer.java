@@ -87,7 +87,7 @@ public class StoreServer extends UnicastRemoteObject implements ServerInterface{
     @Override 
     public boolean verifyTransaction(Transaction transaction) throws RemoteException{
         boolean isValid;
-        
+        /*
         Invoice invoice = new Invoice(transaction , this.storeName);
        
         //Do some basic checking like random chance that check/credit card is bad or fake bills
@@ -97,7 +97,7 @@ public class StoreServer extends UnicastRemoteObject implements ServerInterface{
             return false;
         }
         //invoice.saveInSalesLog();
-        
+        */
         return true;
     }
     

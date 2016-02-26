@@ -2,8 +2,10 @@ package GUI;
 
 import Catalog.Product;
 import Catalog.Stock;
+import java.awt.Font;
 import java.rmi.RemoteException;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import static java.util.Collections.list;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
@@ -17,6 +19,7 @@ public class CartPanel extends javax.swing.JPanel {
     private PostGUI masterPost; //reference to the parent master GUI
     InventoryPanel inventoryPanel;
     DefaultListModel cartModel;
+    ArrayList <Product> cartProducts;
     static double total = 0;
 
     /**
@@ -28,6 +31,13 @@ public class CartPanel extends javax.swing.JPanel {
         initComponents();
         cartModel = new DefaultListModel();
         jList1.setModel(cartModel);
+        jList1.setFont(new Font("monospaced", Font.PLAIN, 10));
+        cartProducts = new ArrayList <>();
+    }
+    
+    public ArrayList <Product> getProductsFromCart ()
+    {
+        return cartProducts;
     }
 
     /**
@@ -188,7 +198,7 @@ public class CartPanel extends javax.swing.JPanel {
         double ex_price = product.getQuantity() * product.getPrice();
         DecimalFormat df = new DecimalFormat("#.##");
         total += ex_price;
-        String productToString = String.format("%10s %10s %10s %.15s", 
+        String productToString = String.format("%s %5s %10s %10s", 
                                                product.getDescription(),
                                                product.getQuantity(),
                                                product.getPrice(),
@@ -196,13 +206,14 @@ public class CartPanel extends javax.swing.JPanel {
         
         cartModel.addElement(productToString);
         jTextField1.setText(df.format(total));
+        cartProducts.add(product);
         
         
         
         
 
     }//GEN-LAST:event_jButton1MouseClicked
-
+    
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed

@@ -4,6 +4,7 @@ package GUI;
 import Catalog.Product;
 import Catalog.Stock;
 import RMI.Client;
+import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -39,6 +40,7 @@ public class InventoryPanel extends javax.swing.JPanel {
            listModel.addElement(product.productReaderToString());
        jList1.setModel(listModel);
        jList1.addMouseListener(mouseListener);
+       jList1.setFont(new Font("monospaced", Font.PLAIN, 10));
        
     }
     

@@ -4,9 +4,13 @@ package GUI;
 import Catalog.Product;
 import Catalog.Stock;
 import RMI.Client;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.JList;
 
 /**
  *
@@ -20,7 +24,7 @@ public class InventoryPanel extends javax.swing.JPanel {
     ArrayList <Product> products;
     DefaultListModel listModel;
     private PostGUI masterPost; //reference to the parent master GUI
-    
+    static int productSelected = 0;
     public InventoryPanel(PostGUI _currentPost) throws RemoteException {
         masterPost = _currentPost;
         initComponents();
@@ -34,10 +38,27 @@ public class InventoryPanel extends javax.swing.JPanel {
        for (Product product : products)
            listModel.addElement(product.productReaderToString());
        jList1.setModel(listModel);
-        
+       jList1.addMouseListener(mouseListener);
        
     }
-
+    
+    public JList getList ()
+    {
+        return this.jList1;
+    }
+    MouseListener mouseListener = new MouseAdapter() {
+      public void mouseClicked(MouseEvent mouseEvent) {
+        JList theList = (JList) mouseEvent.getSource();
+        if (mouseEvent.getClickCount() == 1) {
+          int index = theList.getSelectedIndex();
+          if (index >= 0) {
+            Object o = theList.getModel().getElementAt(index);
+            productSelected = index;
+            
+          }
+        }
+      }
+    };
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -81,7 +102,7 @@ public class InventoryPanel extends javax.swing.JPanel {
                 .addComponent(jLabel1)
                 .addGap(95, 95, 95)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 157, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 119, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addContainerGap())
             .addComponent(jScrollPane1)

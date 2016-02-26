@@ -29,6 +29,7 @@ public class PostGUI extends javax.swing.JFrame {
     CartPanel cartPanel;
     ServerInterface si;
     public String storeName;
+    static int productSelected = 0;
     
     final int CONNECTION = 0;
     final int VALITADION = 1;

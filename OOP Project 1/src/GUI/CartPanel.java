@@ -6,11 +6,13 @@ package GUI;
  * @author Jose Ortiz
  */
 public class CartPanel extends javax.swing.JPanel {
+    private PostGUI masterPost; //reference to the parent master GUI
 
     /**
      *  Only contains fuctionality used on the Cart Panel
      */
-    public CartPanel() {
+    public CartPanel(PostGUI _masterPost) {
+        masterPost = _masterPost;
         initComponents();
     }
 

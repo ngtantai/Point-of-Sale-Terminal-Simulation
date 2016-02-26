@@ -9,12 +9,13 @@ import Transactions.Transaction;
  * @author Jose Ortiz Costa
  */
 public class PaymentPanel extends javax.swing.JPanel {
-    
+    private PostGUI masterPost; //reference to the parent master GUI
     private InvoicePopUp popup;
     /**
      *  Only contains functionality used on the Payment Panel
      */
-    public PaymentPanel() {
+    public PaymentPanel(PostGUI _masterPost) {
+        masterPost = _masterPost;
         popup = new InvoicePopUp();
         initComponents();
     }
@@ -98,6 +99,7 @@ public class PaymentPanel extends javax.swing.JPanel {
     }
     
     //This is for testing PaymentPanel only. Run and click the PAY button.
+    /*
     public static void main(String[] args){
         javax.swing.JFrame dummyFrame = new javax.swing.JFrame();
         PaymentPanel paymentPanel = new PaymentPanel();
@@ -113,6 +115,7 @@ public class PaymentPanel extends javax.swing.JPanel {
         dummyFrame.pack();
         
     }
+    */
     
     /**
      * This method is called from within the constructor to initialize the form.

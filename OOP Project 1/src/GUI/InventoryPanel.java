@@ -19,17 +19,22 @@ public class InventoryPanel extends javax.swing.JPanel {
     Stock catalog;
     ArrayList <Product> products;
     DefaultListModel listModel;
-    public InventoryPanel() throws RemoteException {
+    private PostGUI masterPost; //reference to the parent master GUI
+    
+    public InventoryPanel(PostGUI _currentPost) throws RemoteException {
+        masterPost = _currentPost;
         initComponents();
         // initializes the client
-       Client client = new Client();
+       
+       
        listModel = new DefaultListModel();
-       client.initClient();
-       catalog = client.getServerInterface().getCatalog();
+    
+       catalog = masterPost.getLocalCatalog();
        products = catalog.getProductsFromStock();
        for (Product product : products)
            listModel.addElement(product.productReaderToString());
        jList1.setModel(listModel);
+        
        
     }
 

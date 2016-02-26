@@ -6,10 +6,12 @@ package GUI;
  * @author Jose Ortiz
  */
 public class CustomerInfoPanel extends javax.swing.JPanel {
+    private PostGUI masterPost; //reference to the parent master GUI
     /**
      *  Only contains functionality used on the Costumer panel ( the header panel)
      */
-    public CustomerInfoPanel() {
+    public CustomerInfoPanel(PostGUI _masterPost) {
+        masterPost = _masterPost;
         initComponents();
     }
 

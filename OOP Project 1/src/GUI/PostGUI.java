@@ -1,49 +1,109 @@
 package GUI;
 
+import Catalog.Stock;
+import RMI.Client;
+import RMI.ServerInterface;
+import Transactions.Transaction;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import javax.swing.JOptionPane;
 
 /**
  *
- * @author Jose Ortiz
- * This class contains the logic to arrange all the panels around the frame
- * and show them in screen. No other logic need to be added to this class. All the
- * functionality logic goes inside the panels class importing  the correct 
- * packages.
+ * @author Jose Ortiz This class contains the logic to arrange all the panels
+ * around the frame and show them in screen. No other logic need to be added to
+ * this class. All the functionality logic goes inside the panels class
+ * importing the correct packages.
  */
 public class PostGUI extends javax.swing.JFrame {
+    Stock localCatalog;
     CustomerInfoPanel customerInfoPanel;
     InventoryPanel inventoryPanel;
     PaymentPanel paymentPanel;
     CartPanel cartPanel;
+    ServerInterface si;
+    
+    final int CONNECTION = 0;
+    final int VALITADION = 1;
+
     /**
      * Creates new form PostGUI
      */
-    public PostGUI() throws RemoteException {       
-       initPanels();
-       initComponents();
+    public PostGUI() throws RemoteException {
+        connect();
+        localCatalog = si.getCatalog();
+        initPanels();
+        initComponents();
+
     }
     
-    // Init all the panels 
-    private void initPanels() throws RemoteException
-    {
-         // IMPORTANT NOTE:  you'll still need to create the layouts here to 
-         // arrange these panels in the way you need
-         customerInfoPanel  = new CustomerInfoPanel();
-         inventoryPanel = new InventoryPanel();
-         paymentPanel = new PaymentPanel();
-         cartPanel = new CartPanel();
-         this.add(customerInfoPanel);
-         this.pack();
-         this.add(inventoryPanel);
-         this.pack();
-         this.add(cartPanel);
-         this.pack();
-         this.add(paymentPanel);
-         this.pack();
+    public Stock getLocalCatalog(){
+        return localCatalog;
     }
+
+    private void connect() {
+
+        boolean connected = false;
+        int choice;
+
+        Object[] options = {
+            "Retry",
+            "Cancel"
+        };
+
+        while (!connected) {
+
+            try {
+
+                Registry myReg;
+
+                myReg = LocateRegistry.getRegistry("127.0.0.1", 19667);
+                si = (ServerInterface) myReg.lookup("Store");
+                connected = true;
+
+            } catch (RemoteException | NotBoundException e) {
+
+                choice = JOptionPane.showOptionDialog(null,
+                        "Connection Not Possible",
+                        "Connection Manager",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.WARNING_MESSAGE,
+                        null,
+                        options,
+                        options[0]);
+
+                if (choice == 1) {
+                    System.exit(1);
+                }
+            }
+
+        }
+
+    }
+
+
+    // Init all the panels 
+    private void initPanels() throws RemoteException {
+        // IMPORTANT NOTE:  you'll still need to create the layouts here to 
+        // arrange these panels in the way you need
+        customerInfoPanel = new CustomerInfoPanel(this);
+        inventoryPanel = new InventoryPanel(this);
+        paymentPanel = new PaymentPanel(this);
+        cartPanel = new CartPanel(this);
+        this.add(customerInfoPanel);
+        this.pack();
+        this.add(inventoryPanel);
+        this.pack();
+        this.add(cartPanel);
+        this.pack();
+        this.add(paymentPanel);
+        this.pack();
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

@@ -23,7 +23,7 @@ import java.io.Serializable;
  * @see Payment class
  */
 public class Invoice implements Serializable{
-    private StoreServer store;
+    private String storeName;
     private Transaction transaction;
     private double subtotal;
     private double total;
@@ -37,19 +37,17 @@ public class Invoice implements Serializable{
     /**
      * Constructor
      *
-     * @param _store Store which this transaction belongs to
      * @param _transaction Transaction Object
      */
-    public Invoice (Transaction _transaction, StoreServer _store ){
- 
+    public Invoice (Transaction _transaction, String _storeName){
+        this.storeName = _storeName;
+        
         this.transaction = _transaction;
-        this.store = _store;
+  
         this.products = transaction.getProducts();
         
         
         setAmountReturned(transaction.getAmountPaid()-transaction.getTotal());
-        
-
     }
 
     // Setters
@@ -164,6 +162,10 @@ public class Invoice implements Serializable{
 
         }
     }
+    
+    public String getStoreName(){
+        return this.storeName;
+    }
 
     /**
      * Read all the invoices from the salesLog
@@ -200,7 +202,7 @@ public class Invoice implements Serializable{
         formattedPart1 = "%-20s %-15s%n";
         formattedPart2 = "%-20s %-30s $%8.2f%n";
 
-        invoicePart1 = String.format(formattedPart1, this.store.getName() , getInvoiceDate())
+        invoicePart1 = String.format(formattedPart1, this.getStoreName() , getInvoiceDate())
                 + String.format(formattedPart1, transaction.getCustomerName(), "");
 
         for (i = 0; i < products.size(); i++) {

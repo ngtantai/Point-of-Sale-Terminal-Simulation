@@ -2,7 +2,9 @@
 package GUI;
 
 import Transactions.Invoice;
+import Transactions.Payment;
 import Transactions.Transaction;
+import javax.swing.ButtonGroup;
 
 /**
  *
@@ -11,22 +13,37 @@ import Transactions.Transaction;
 public class PaymentPanel extends javax.swing.JPanel {
     private PostGUI masterPost; //reference to the parent master GUI
     private InvoicePopUp popup;
+
     /**
      *  Only contains functionality used on the Payment Panel
      */
     public PaymentPanel(PostGUI _masterPost) {
+
         masterPost = _masterPost;
         popup = new InvoicePopUp();
         initComponents();
     }
     
+    public int getPaymentType(){
+        if(creditRadioBtn.isSelected()){
+            return Payment.CREDIT;
+        }else if(cashRadioBtn.isSelected()){
+            return Payment.CASH;
+        }else{
+            return Payment.CHECK;
+        }
+    }
+    
+    public int getCreditCardNumber(){
+        return Integer.parseInt(creditCardNumber.getText());
+    }
     /**
      * <p>This method is invoked by the supposed 'PAY' button of this class.
      * It will create a Transaction and attempt to get an Invoice from the
      * StoreServer.</p>
      */
     private void paymentExecute(){
-        
+        Invoice invoice = new Invoice(masterPost.remoteVerifyTransaction(), masterPost.getStoreName());
         //TODO: Get the CartPanel product list.
         //TODO: Get the Customer instance from CustomerInfoPanel.
         
@@ -40,7 +57,8 @@ public class PaymentPanel extends javax.swing.JPanel {
         //Server.StoreServer storeServer;    //for the purposes of testing
         
         //TODO: comment out this line below later.
-        popup.display("PRINT INVOICE STRING HERE");
+        //popup.display(invoice.toString());
+        System.out.println("payment went through");
     }
     
     /**
@@ -126,6 +144,7 @@ public class PaymentPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        paymentType = new javax.swing.ButtonGroup();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         jPanel1 = new javax.swing.JPanel();
@@ -134,22 +153,41 @@ public class PaymentPanel extends javax.swing.JPanel {
         creditRadioBtn = new javax.swing.JRadioButton();
         jSeparator3 = new javax.swing.JSeparator();
         payBtn = new javax.swing.JButton();
+        cardNumLabel = new javax.swing.JLabel();
+        creditCardNumber = new javax.swing.JTextField();
 
         setPreferredSize(new java.awt.Dimension(721, 689));
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "PAYMENT", 0, 0, new java.awt.Font("Sylfaen", 1, 20))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "PAYMENT", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Sylfaen", 1, 20))); // NOI18N
+        jPanel1.setToolTipText("Enter Your Credit Card number");
+        jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jPanel1.setDoubleBuffered(false);
 
+        paymentType.add(cashRadioBtn);
         cashRadioBtn.setText("Cash");
         cashRadioBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cashRadioBtnActionPerformed(evt);
+                onCashSelect(evt);
             }
         });
 
+        paymentType.add(checkRadioBtn);
         checkRadioBtn.setText("Check");
+        checkRadioBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                onCheckSelect(evt);
+            }
+        });
 
+        paymentType.add(creditRadioBtn);
         creditRadioBtn.setSelected(true);
         creditRadioBtn.setText("Credit");
+        creditRadioBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                onCreditSelect(evt);
+            }
+        });
 
         jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
@@ -159,6 +197,15 @@ public class PaymentPanel extends javax.swing.JPanel {
         payBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 payBtnActionPerformed(evt);
+            }
+        });
+
+        cardNumLabel.setText("Card Number (numbers Only)");
+
+        creditCardNumber.setToolTipText("card num");
+        creditCardNumber.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                creditCardNumberActionPerformed(evt);
             }
         });
 
@@ -173,11 +220,15 @@ public class PaymentPanel extends javax.swing.JPanel {
                 .addComponent(checkRadioBtn)
                 .addGap(54, 54, 54)
                 .addComponent(creditRadioBtn)
-                .addGap(96, 96, 96)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(cardNumLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(creditCardNumber))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(payBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(68, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -187,15 +238,18 @@ public class PaymentPanel extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(28, 28, 28)
+                                .addGap(15, 15, 15)
+                                .addComponent(cardNumLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(cashRadioBtn)
                                     .addComponent(checkRadioBtn)
-                                    .addComponent(creditRadioBtn)))
+                                    .addComponent(creditRadioBtn)
+                                    .addComponent(creditCardNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addContainerGap()
+                                .addGap(26, 26, 26)
                                 .addComponent(payBtn)))
-                        .addGap(0, 27, Short.MAX_VALUE)))
+                        .addGap(0, 25, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -230,15 +284,41 @@ public class PaymentPanel extends javax.swing.JPanel {
         paymentExecute();
     }//GEN-LAST:event_payBtnActionPerformed
 
+    private void onCreditSelect(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onCreditSelect
+        if(!creditCardNumber.isEnabled()){
+            creditCardNumber.setEnabled(true);
+        }
+
+    }//GEN-LAST:event_onCreditSelect
+
+    private void onCheckSelect(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onCheckSelect
+        if(creditCardNumber.isEnabled()){
+            creditCardNumber.setEnabled(false);
+        }
+    }//GEN-LAST:event_onCheckSelect
+
+    private void onCashSelect(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onCashSelect
+        if(creditCardNumber.isEnabled()){
+            creditCardNumber.setEnabled(false);
+        }
+    }//GEN-LAST:event_onCashSelect
+
+    private void creditCardNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_creditCardNumberActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_creditCardNumberActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel cardNumLabel;
     private javax.swing.JRadioButton cashRadioBtn;
     private javax.swing.JRadioButton checkRadioBtn;
+    private javax.swing.JTextField creditCardNumber;
     private javax.swing.JRadioButton creditRadioBtn;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JButton payBtn;
+    private javax.swing.ButtonGroup paymentType;
     // End of variables declaration//GEN-END:variables
 }

@@ -28,7 +28,7 @@ import java.rmi.server.UnicastRemoteObject;
  * 
  */
 public class StoreServer extends UnicastRemoteObject implements ServerInterface{
-
+    
     private PaymentVerifier paymentVerifier;
     public String storeName;
     public Post currentPost;
@@ -67,6 +67,12 @@ public class StoreServer extends UnicastRemoteObject implements ServerInterface{
         
     }
     
+    @Override
+    public String getRemoteStoreName() throws RemoteException{
+        
+        return this.storeName;
+        
+    }
   
 
 
@@ -82,7 +88,7 @@ public class StoreServer extends UnicastRemoteObject implements ServerInterface{
     public boolean verifyTransaction(Transaction transaction) throws RemoteException{
         boolean isValid;
         
-        Invoice invoice = new Invoice(transaction , this);
+        Invoice invoice = new Invoice(transaction , this.storeName);
        
         //Do some basic checking like random chance that check/credit card is bad or fake bills
         if(!paymentVerifier.verify(invoice)){

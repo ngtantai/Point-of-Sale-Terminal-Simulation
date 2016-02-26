@@ -16,5 +16,7 @@ public interface ServerInterface extends Remote
     
     boolean verifyTransaction(Transaction transaction) throws RemoteException;
     
+    String getRemoteStoreName() throws RemoteException;
+    
             
 }

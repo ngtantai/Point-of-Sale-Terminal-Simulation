@@ -3,6 +3,8 @@ package GUI;
 import Catalog.Stock;
 import RMI.Client;
 import RMI.ServerInterface;
+import Transactions.Invoice;
+import Transactions.Payment;
 import Transactions.Transaction;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -26,6 +28,7 @@ public class PostGUI extends javax.swing.JFrame {
     PaymentPanel paymentPanel;
     CartPanel cartPanel;
     ServerInterface si;
+    public String storeName;
     
     final int CONNECTION = 0;
     final int VALITADION = 1;
@@ -44,6 +47,47 @@ public class PostGUI extends javax.swing.JFrame {
     public Stock getLocalCatalog(){
         return localCatalog;
     }
+    
+    public Transaction remoteVerifyTransaction(){
+        boolean wasProcessed = false;
+        if(paymentPanel.getPaymentType() == Payment.CREDIT){
+            Payment payment = new Payment(paymentPanel.getPaymentType() , 34.0 , paymentPanel.getCreditCardNumber());
+        }else{
+            Payment payment = new Payment(paymentPanel.getPaymentType() , 34.0);
+        }
+        
+        Transaction transaction = new Transaction();
+        int choice;
+        Object[] options = {
+            "Retry",
+            "Cancel"
+        };
+        
+        
+        while(!wasProcessed){
+            try {
+                
+                transaction.setValid(si.verifyTransaction(transaction));
+                wasProcessed = true;
+                
+            } catch (RemoteException  e) {
+
+                choice = JOptionPane.showOptionDialog(null,
+                        "Connection Not Possible",
+                        "Connection Manager",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.WARNING_MESSAGE,
+                        null,
+                        options,
+                        options[0]);
+
+                if (choice == 1) {
+                    return null;
+                }
+            }
+        }
+        return transaction;
+    }
 
     private void connect() {
 
@@ -60,10 +104,15 @@ public class PostGUI extends javax.swing.JFrame {
             try {
 
                 Registry myReg;
-
                 myReg = LocateRegistry.getRegistry("127.0.0.1", 19667);
                 si = (ServerInterface) myReg.lookup("Store");
                 connected = true;
+                
+                try{
+                    storeName = si.getRemoteStoreName();
+                }catch (RemoteException e){
+                    storeName = "";
+                }
 
             } catch (RemoteException | NotBoundException e) {
 
@@ -85,6 +134,11 @@ public class PostGUI extends javax.swing.JFrame {
 
     }
 
+    public String getStoreName(){
+        
+        return this.storeName;
+        
+    }
 
     // Init all the panels 
     private void initPanels() throws RemoteException {

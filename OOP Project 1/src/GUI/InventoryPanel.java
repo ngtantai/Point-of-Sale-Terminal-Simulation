@@ -1,4 +1,3 @@
-
 package GUI;
 
 import Catalog.Product;
@@ -15,60 +14,87 @@ import javax.swing.JList;
 /**
  *
  * @author Jose Ortiz
+ *
+ * This class extends JPanel and contains the functionality to show the products
+ * on the catalog and will have a button to add a selected product to the cart
+ * list.
  */
 public class InventoryPanel extends javax.swing.JPanel {
+
     /**
-     *  Only contains functionality used on the Inventory Panel
+     * Only contains functionality used on the Inventory Panel
      */
     Stock catalog;
-    ArrayList <Product> products;
+    ArrayList<Product> products;
     DefaultListModel listModel;
     private PostGUI masterPost; //reference to the parent master GUI
-    static int productSelected = 0;
+    static int productSelected = 0; // keep track of the index selected 
+
+    /**
+     * Constructor
+     *
+     * @param _currentPost connection the the main Post frame (client)
+     * @throws RemoteException
+     */
     public InventoryPanel(PostGUI _currentPost) throws RemoteException {
         masterPost = _currentPost;
         initComponents();
-        // initializes the client
-       
-       
-       listModel = new DefaultListModel();
-    
-       catalog = masterPost.getLocalCatalog();
-       products = catalog.getProductsFromStock();
-       for (Product product : products)
-           listModel.addElement(product.productReaderToString());
-       inventoryList.setModel(listModel);
-       inventoryList.addMouseListener(mouseListener);
-       inventoryList.setFont(new Font("monospaced", Font.PLAIN, 10));
-       
+        // initializes the catalog sent from the server
+        initCatalog();
+
     }
-    
-    public JList getList ()
-    {
+
+    /**
+     * Initializes the catalog sent from the server and load its products on the
+     * inventory list
+     */
+    public void initCatalog() {
+        listModel = new DefaultListModel();
+        catalog = masterPost.getLocalCatalog();
+        products = catalog.getProductsFromStock();
+        for (Product product : products) {
+            listModel.addElement(product.productReaderToString());
+        }
+        inventoryList.setModel(listModel);
+        inventoryList.addMouseListener(mouseListener);
+        inventoryList.setFont(new Font("monospaced", Font.PLAIN, 10));
+    }
+
+    /**
+     * Gets the container list where the products are displayed
+     *
+     * @return a JList Object
+     */
+    public JList getList() {
         return this.inventoryList;
     }
+
+    /**
+     * Event listener to select a product.
+     */
     MouseListener mouseListener = new MouseAdapter() {
-      public void mouseClicked(MouseEvent mouseEvent) {
-        JList theList = (JList) mouseEvent.getSource();
-        if (mouseEvent.getClickCount() == 1) {
-          int index = theList.getSelectedIndex();
-          if (index >= 0) {
-            Object o = theList.getModel().getElementAt(index);
-            productSelected = index;
-            
-          }
+        public void mouseClicked(MouseEvent mouseEvent) {
+            JList theList = (JList) mouseEvent.getSource();
+            if (mouseEvent.getClickCount() == 1) {
+                int index = theList.getSelectedIndex();
+                if (index >= 0) {
+                    Object o = theList.getModel().getElementAt(index);
+                    productSelected = index;
+
+                }
+            }
+            if (mouseEvent.getClickCount() == 2) {
+                int index = theList.getSelectedIndex();
+                if (index >= 0) {
+                    Object o = theList.getModel().getElementAt(index);
+                    productSelected = index;
+                    masterPost.handleDoubleClickedProduct();
+
+                }
+            }
         }
-        if(mouseEvent.getClickCount() == 2){
-           int index = theList.getSelectedIndex();
-          if (index >= 0) {
-            Object o = theList.getModel().getElementAt(index);
-            productSelected = index;
-            masterPost.handleDoubleClickedProduct();
-            
-          } 
-        }
-      }
     };
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -173,11 +199,15 @@ public class InventoryPanel extends javax.swing.JPanel {
     private void addToCartBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToCartBtnActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_addToCartBtnActionPerformed
-
+    /**
+     * Click handler that add a product to the cart
+     *
+     * @param evt
+     */
     private void addToCartButtonHandler(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToCartButtonHandler
         String quantity = (String) quantitySelector.getSelectedItem();
         Integer productQuantity = Integer.valueOf(quantity);
-        masterPost.handleAddProduct(productSelected, productQuantity );
+        masterPost.handleAddProduct(productSelected, productQuantity);
     }//GEN-LAST:event_addToCartButtonHandler
 
     private void quantitySelectorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quantitySelectorActionPerformed

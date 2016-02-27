@@ -14,18 +14,25 @@ import javax.swing.JList;
 
 /**
  *
- * @author Jose Ortiz
+ * @author Jose Ortiz 
+ * 
+ * CSC648 This class extends JPanel and handles all the
+ * functionality inside of the CartPanel such as holding products added to the
+ * cart, keeping track of the total amount and removing or clearing the cartList
  */
 public class CartPanel extends javax.swing.JPanel {
 
     private PostGUI masterPost; //reference to the parent master GUI
     InventoryPanel inventoryPanel;
     DefaultListModel cartModel;
-    ArrayList <Product> cartProducts;
+    ArrayList<Product> cartProducts;
     private final DecimalFormat df = new DecimalFormat("#.##");
 
     /**
-     * Only contains fuctionality used on the Cart Panel
+     * Constructor
+     *
+     * @param _masterPost connection the the main Post frame (client)
+     * @throws RemoteException
      */
     public CartPanel(PostGUI _masterPost) throws RemoteException {
         masterPost = _masterPost;
@@ -34,17 +41,23 @@ public class CartPanel extends javax.swing.JPanel {
         cartModel = new DefaultListModel();
         cartList.setModel(cartModel);
         cartList.setFont(new Font("monospaced", Font.PLAIN, 10));
-        cartProducts = new ArrayList <>();
+        cartProducts = new ArrayList<>();
         totalField.setText(df.format(0));
     }
-    
-    public ArrayList <Product> getProductsFromCart ()
-    {
+
+    /**
+     *
+     * @return an array of Products objects added to the cartList
+     */
+    public ArrayList<Product> getProductsFromCart() {
         return cartProducts;
     }
-    
-    public void clear(){
-        cartProducts = new ArrayList <>();
+
+    /**
+     * Clear Cart List
+     */
+    public void clear() {
+        cartProducts = new ArrayList<>();
         cartModel.clear();
         totalField.setText(df.format(0));
     }
@@ -191,28 +204,32 @@ public class CartPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    public void addDoubleClickedProduct(){
+    public void addDoubleClickedProduct() {
         Stock catalog = this.masterPost.getLocalCatalog();
         Product product = catalog.getProduct(InventoryPanel.productSelected);
         //check if exists
-        
+
         product.setQuantity(1);
         double ex_price = product.getPrice();
-        
-        
-        String productToString = String.format("%s %5s %10s %10s", 
-                                               product.getDescription(),
-                                               1,
-                                               product.getPrice(),
-                                               ex_price);
-        
+
+        String productToString = String.format("%s %5s %10s %10s",
+                product.getDescription(),
+                1,
+                product.getPrice(),
+                ex_price);
+
         cartModel.addElement(productToString);
         cartProducts.add(product);
         totalField.setText(df.format(Payment.calculateTotal(cartProducts)));
-        
+
     }
-    
-    
+
+    /**
+     * Check if a product is already added to the cart
+     *
+     * @param productToLookUp
+     * @return the duplicated Product Object
+     */
     public Product isInCart(Product productToLookUp) {
 
         if (cartProducts.size() == 0) {
@@ -228,26 +245,31 @@ public class CartPanel extends javax.swing.JPanel {
         return null;
 
     }
-    
-    public void addProduct(int productIndex, int quantity){
+
+    /**
+     * Add a product to the cartList
+     *
+     * @param productIndex index of the product selected on the inventory list
+     * @param quantity desired quantity of the same product
+     */
+    public void addProduct(int productIndex, int quantity) {
         Stock catalog = this.masterPost.getLocalCatalog();
         Product product = catalog.getProduct(InventoryPanel.productSelected);
         product.setQuantity(quantity);
         double ex_price = product.getQuantity() * product.getPrice();
-        
-        
-        String productToString = String.format("%s %5s %10s %10s", 
-                                               product.getDescription(),
-                                               product.getQuantity(),
-                                               product.getPrice(),
-                                               ex_price);
-        
+
+        String productToString = String.format("%s %5s %10s %10s",
+                product.getDescription(),
+                product.getQuantity(),
+                product.getPrice(),
+                ex_price);
+
         cartModel.addElement(productToString);
-        
+
         cartProducts.add(product);
         totalField.setText(df.format(Payment.calculateTotal(cartProducts)));
     }
-        
+
     private void totalFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_totalFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_totalFieldActionPerformed
@@ -256,16 +278,21 @@ public class CartPanel extends javax.swing.JPanel {
         clear();
     }//GEN-LAST:event_clearBtnActionPerformed
 
+    /**
+     * Remove a Product from the CartList
+     *
+     * @param evt Action event send to the cartList
+     */
     private void removeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeBtnActionPerformed
         int index = cartList.getSelectedIndex();
-          if (index >= 0) {
+        if (index >= 0) {
             //Object o = cartList.getModel().getElementAt(index);
             //productSelected = index;
             cartModel.remove(index);
             cartProducts.remove(index);
             totalField.setText(df.format(Payment.calculateTotal(cartProducts)));
-            
-          }
+
+        }
     }//GEN-LAST:event_removeBtnActionPerformed
 
 

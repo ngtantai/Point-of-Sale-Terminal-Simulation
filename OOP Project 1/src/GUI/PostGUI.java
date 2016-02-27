@@ -18,12 +18,16 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Jose Ortiz This class contains the logic to arrange all the panels
- * around the frame and show them in screen. No other logic need to be added to
- * this class. All the functionality logic goes inside the panels class
- * importing the correct packages.
+ * @author Jose Ortiz
+ *
+ * This class contains the logic to arrange all the panels around the frame and
+ * show them in screen. No other logic need to be added to this class. All the
+ * functionality logic goes inside the panels class importing the correct
+ * packages. This class represents the POST or Client that receives info from
+ * the Server or Store using RMI
  */
 public class PostGUI extends javax.swing.JFrame {
+
     Stock localCatalog;
     CustomerInfoPanel customerInfoPanel;
     InventoryPanel inventoryPanel;
@@ -32,12 +36,14 @@ public class PostGUI extends javax.swing.JFrame {
     ServerInterface si;
     public String storeName;
     static int productSelected = 0;
-    
     final int CONNECTION = 0;
     final int VALITADION = 1;
 
     /**
-     * Creates new form PostGUI
+     * Constructor
+     *
+     *
+     * @throws RemoteException
      */
     public PostGUI() throws RemoteException {
         connect();
@@ -46,73 +52,84 @@ public class PostGUI extends javax.swing.JFrame {
         initComponents();
 
     }
-    
-    public Stock getLocalCatalog(){
+
+    /**
+     *
+     * @return the local catalog
+     */
+    public Stock getLocalCatalog() {
         return localCatalog;
     }
-    
-    public void clearAll(){
+
+    /**
+     * clear all the panels
+     */
+    public void clearAll() {
         cartPanel.clear();
         customerInfoPanel.clear();
         paymentPanel.clear();
     }
-    
-    
-    public Transaction remoteVerifyTransaction(){
+
+    /**
+     * Send the transaction in process to the server in order to get
+     * verification to move forward with the purchase
+     *
+     * @return a Transaction Object with all the info about the transaction in
+     * process
+     */
+    public Transaction remoteVerifyTransaction() {
         //perform checks first
         //-cart has items
         //name entered
         //credit card number enterd
-        
+
         boolean wasProcessed = false;
-        ArrayList <Product> cartProducts = cartPanel.getProductsFromCart();
+        ArrayList<Product> cartProducts = cartPanel.getProductsFromCart();
         double total = Payment.calculateTotal(cartProducts);
         Customer customer = customerInfoPanel.getCustomer();
         Payment payment;
-        
-        if(customer.getName().equals("")){
+
+        if (customer.getName().equals("")) {
             JOptionPane.showMessageDialog(null,
                     "No Customer Name Entered",
                     "Customer Error",
                     JOptionPane.WARNING_MESSAGE);
             return null;
-        }else if(cartProducts.isEmpty()){
+        } else if (cartProducts.isEmpty()) {
             JOptionPane.showMessageDialog(null,
                     "No items in Cart.",
                     "Cart Error",
                     JOptionPane.WARNING_MESSAGE);
             return null;
-        }else if(paymentPanel.getPaymentType() == Payment.CREDIT && !paymentPanel.validateCreditCardNumber()){
+        } else if (paymentPanel.getPaymentType() == Payment.CREDIT && !paymentPanel.validateCreditCardNumber()) {
             JOptionPane.showMessageDialog(null,
                     "Invalid Credit Card Number",
                     "Payment Error",
                     JOptionPane.WARNING_MESSAGE);
             return null;
         }
-        
-        
-        if(paymentPanel.getPaymentType() == Payment.CREDIT){
-            payment = new Payment(paymentPanel.getPaymentType() , total , paymentPanel.getCreditCardNumber());
-        }else{
-            payment = new Payment(paymentPanel.getPaymentType() , total);
+
+        if (paymentPanel.getPaymentType() == Payment.CREDIT) {
+            payment = new Payment(paymentPanel.getPaymentType(), total, paymentPanel.getCreditCardNumber());
+        } else {
+            payment = new Payment(paymentPanel.getPaymentType(), total);
         }
-        
-        Transaction transaction = new Transaction(customer, payment,  cartProducts);
+
+        Transaction transaction = new Transaction(customer, payment, cartProducts);
         int choice;
         Object[] options = {
             "Retry",
             "Cancel"
         };
-        
-        
-        while(!wasProcessed){
+
+        while (!wasProcessed) {
             try {
-                
+
                 transaction.setValid(si.verifyTransaction(transaction));
                 clearAll();
                 wasProcessed = true;
-                
-            } catch (RemoteException  e) {
+
+            } catch (RemoteException e) {
 
                 choice = JOptionPane.showOptionDialog(null,
                         "Connection Not Possible",
@@ -131,6 +148,11 @@ public class PostGUI extends javax.swing.JFrame {
         return transaction;
     }
 
+    /**
+     * This method shows a warning if the post terminal is run with the server
+     * turned off If not warning is displayed then the server is on and the post
+     * terminal connects to the server.
+     */
     private void connect() {
 
         boolean connected = false;
@@ -149,10 +171,10 @@ public class PostGUI extends javax.swing.JFrame {
                 myReg = LocateRegistry.getRegistry("127.0.0.1", 19667);
                 si = (ServerInterface) myReg.lookup("Store");
                 connected = true;
-                
-                try{
+
+                try {
                     storeName = si.getRemoteStoreName();
-                }catch (RemoteException e){
+                } catch (RemoteException e) {
                     storeName = "";
                 }
 
@@ -175,21 +197,38 @@ public class PostGUI extends javax.swing.JFrame {
         }
 
     }
-
-    public String getStoreName(){
-        
-        return this.storeName;
-        
-    }
     
-    public void handleAddProduct(int productIndex, int quantity){
+    /**
+     * 
+     * @return the name of the store
+     */
+    public String getStoreName() {
+
+        return this.storeName;
+
+    }
+
+    /**
+     * Handle the connection between the client and the inventory panel to add
+     * products
+     * @param productIndex index of the product
+     * @param quantity  quantity of the product
+     */
+    public void handleAddProduct(int productIndex, int quantity) {
         cartPanel.addProduct(productIndex, quantity);
     }
-
-    public void handleDoubleClickedProduct(){
+    
+    /**
+     * Add double click selection option to the inventary list
+     */
+    public void handleDoubleClickedProduct() {
         cartPanel.addDoubleClickedProduct();
     }
-    // Init all the panels 
+
+    /**
+     * Initializes all the panels and components 
+     * @throws RemoteException 
+     */
     private void initPanels() throws RemoteException {
         // IMPORTANT NOTE:  you'll still need to create the layouts here to 
         // arrange these panels in the way you need
@@ -236,30 +275,9 @@ public class PostGUI extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+        /**
+         * Run the Post Terminal
          */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PostGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PostGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PostGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PostGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {

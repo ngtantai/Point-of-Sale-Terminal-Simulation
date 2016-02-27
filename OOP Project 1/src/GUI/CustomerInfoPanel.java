@@ -1,4 +1,3 @@
-
 package GUI;
 
 import Transactions.Customer;
@@ -6,11 +5,19 @@ import Transactions.Customer;
 /**
  *
  * @author Jose Ortiz
+ *
+ * This class extends JPanel and will contains the store name and the customer
+ * name who is making the transaction
  */
 public class CustomerInfoPanel extends javax.swing.JPanel {
+
     private PostGUI masterPost; //reference to the parent master GUI
+
     /**
-     *  Only contains functionality used on the Costumer panel ( the header panel)
+     * Constructor
+     *
+     * @param _masterPost connection the the main Post frame (client)
+     * 
      */
     public CustomerInfoPanel(PostGUI _masterPost) {
         masterPost = _masterPost;
@@ -18,16 +25,17 @@ public class CustomerInfoPanel extends javax.swing.JPanel {
         storeNameLabel.setText(masterPost.getStoreName());
     }
 
-    
-    public void clear(){
+    /**
+     * Clear the costumer field
+     */
+    public void clear() {
         customerName.setText("");
     }
-    
-    public Customer getCustomer(){
+
+    public Customer getCustomer() {
         return new Customer(customerName.getText());
     }
-    
-  
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

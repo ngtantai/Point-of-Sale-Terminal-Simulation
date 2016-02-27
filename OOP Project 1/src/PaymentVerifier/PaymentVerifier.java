@@ -3,6 +3,9 @@ package PaymentVerifier;
 /**
  *
  * @author Brian Parra
+ * 
+ * This class contains the functionality to verify a payment made by the 
+ * client 
  */
 import java.util.Random;
 import Transactions.Invoice;

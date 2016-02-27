@@ -10,14 +10,21 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Jose Ortiz Costa
+ * @author Jose Ortiz
+ * 
+ * This class extends JPanel and contains the functionality to select a payment
+ * method and insert a credit cart number. Also, this class has the event handler
+ * for the payment button that sends to the server a transaction to be validated
  */
 public class PaymentPanel extends javax.swing.JPanel {
     private PostGUI masterPost; //reference to the parent master GUI
     private InvoicePopUp popup;
 
     /**
-     *  Only contains functionality used on the Payment Panel
+     * Constructor
+     *
+     * @param _masterPost connection the the main Post frame (client)
+     * 
      */
     public PaymentPanel(PostGUI _masterPost) {
 
@@ -26,6 +33,10 @@ public class PaymentPanel extends javax.swing.JPanel {
         initComponents();
     }
     
+    /**
+     * Gets the payment type selected by the customer
+     * @return int representing the type of payment 
+     */
     public int getPaymentType(){
         if(creditRadioBtn.isSelected()){
             return Payment.CREDIT;
@@ -36,6 +47,10 @@ public class PaymentPanel extends javax.swing.JPanel {
         }
     }
     
+    /**
+     * 
+     * @return the credit card number inserted
+     */
     public int getCreditCardNumber(){
         return Integer.parseInt(creditCardNumber.getText());
     }
@@ -58,6 +73,11 @@ public class PaymentPanel extends javax.swing.JPanel {
         
     }
     
+    /**
+     * Validates if a credit card number inserted has the correct format
+     * @return  if true, the credit card number is validated. Otherwise, returns
+     *          false
+     */
     public boolean validateCreditCardNumber(){
         boolean valid = true;
         try{
@@ -69,6 +89,9 @@ public class PaymentPanel extends javax.swing.JPanel {
         return valid;
     }
     
+    /**
+     * Clear the credit cart number field
+     */
     public void clear(){
         creditCardNumber.setText("");
         creditRadioBtn.setSelected(true);
@@ -144,25 +167,6 @@ public class PaymentPanel extends javax.swing.JPanel {
             }
         }
     }
-    
-    //This is for testing PaymentPanel only. Run and click the PAY button.
-    /*
-    public static void main(String[] args){
-        javax.swing.JFrame dummyFrame = new javax.swing.JFrame();
-        PaymentPanel paymentPanel = new PaymentPanel();
-        
-        dummyFrame.setTitle("PaymentPanel Tester");
-        dummyFrame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-        dummyFrame.setResizable(true);
-        dummyFrame.setVisible(true);
-        dummyFrame.setLocationRelativeTo(null);
-        dummyFrame.setMinimumSize(new java.awt.Dimension(640, 480));
-        dummyFrame.setFocusable(false);
-        dummyFrame.setContentPane(paymentPanel);
-        dummyFrame.pack();
-        
-    }
-    */
     
     /**
      * This method is called from within the constructor to initialize the form.

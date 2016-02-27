@@ -16,28 +16,31 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
-
 /**
  *
  * @author Brian Parra
- * This is supposed to be an instance of a store server. Pretend that when you instantiate it you can tell it which port to listen to and 
- * what not. There can be multiple StoreServers if you have multiple server racks at your store. Posts will connect to available StoreServers;
- * 
- * 
+ *
+ * This is supposed to be an instance of a store server. Pretend that when you
+ * instantiate it you can tell it which port to listen to and what not. There
+ * can be multiple StoreServers if you have multiple server racks at your store.
+ * Posts will connect to available StoreServers;
+ *
+ *
  */
-public class StoreServer extends UnicastRemoteObject implements ServerInterface{
-    
+public class StoreServer extends UnicastRemoteObject implements ServerInterface {
+
     private PaymentVerifier paymentVerifier;
     public String storeName;
     private final String CATALOG_DATABASE = "products.txt";
     private Stock catalog; // catalog instance
 
-    
     /**
-     * Initializes a StoreServer. This would be the part of the program that sits on the store's servers and listens for POSTs's requests.
+     * Initializes a StoreServer. This would be the part of the program that
+     * sits on the store's servers and listens for POSTs's requests.
+     *
      * @param name the name of the store
      */
-    public StoreServer(String name) throws RemoteException{
+    public StoreServer(String name) throws RemoteException {
         super();
         //Initialize stuff here needs to read in data and what not
         this.storeName = name;
@@ -51,38 +54,44 @@ public class StoreServer extends UnicastRemoteObject implements ServerInterface{
         //For now directly make a post and run it
         //currentPost = new Post(this);
         //currentPost.runPost();
-
     }
 
- 
-    
-    @Override 
-    public Stock getCatalog() throws RemoteException{
-        
-      
-            return this.catalog;
-        
-    }
-    
-    @Override
-    public String getRemoteStoreName() throws RemoteException{
-        
-        return this.storeName;
-        
-    }
-  
-
-
-   
-    
     /**
-     * This takes a transaction, verifies it, then makes an invoice and logs it before sending it back to the client POST
+     * Implements the getCatalog method from the server Interface
+     *
+     * @return a Stock object with the catalog
+     * @throws RemoteException
+     */
+    @Override
+    public Stock getCatalog() throws RemoteException {
+
+        return this.catalog;
+
+    }
+
+    /**
+     * Implements the getRemoteName method from the server Interface
+     *
+     * @return
+     * @throws RemoteException
+     */
+    @Override
+    public String getRemoteStoreName() throws RemoteException {
+
+        return this.storeName;
+
+    }
+
+    /**
+     * This takes a transaction, verifies it, then makes an invoice and logs it
+     * before sending it back to the client POST
+     *
      * @param transaction transaction to verify
      * @return Invoice with all calculated values and status
      * @throws java.rmi.RemoteException
      */
-    @Override 
-    public boolean verifyTransaction(Transaction transaction) throws RemoteException{
+    @Override
+    public boolean verifyTransaction(Transaction transaction) throws RemoteException {
         boolean isValid;
         /*
         Invoice invoice = new Invoice(transaction , this.storeName);
@@ -94,20 +103,24 @@ public class StoreServer extends UnicastRemoteObject implements ServerInterface{
             return false;
         }
         //invoice.saveInSalesLog();
-        */
+         */
         return true;
     }
-    
+
     /**
      * Get the Store's name
+     *
      * @return Store's name
      */
-    public String getName(){
+    public String getName() {
         return this.storeName;
     }
-    
 
-    
+    /**
+     * Print in console if the server was registered and if it is online.
+     *
+     * @param args
+     */
     public static void main(String args[]) {
         /*
 	     * The main method register the server
